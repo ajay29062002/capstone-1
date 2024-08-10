@@ -3,6 +3,7 @@ package com.wecp.educationalresourcedistributionsystem.controller;
 import com.wecp.educationalresourcedistributionsystem.dto.LoginRequest;
 import com.wecp.educationalresourcedistributionsystem.dto.LoginResponse;
 import com.wecp.educationalresourcedistributionsystem.entity.User;
+import com.wecp.educationalresourcedistributionsystem.jwt.JwtUtil;
 import com.wecp.educationalresourcedistributionsystem.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,9 @@ public class RegisterAndLoginController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private JwtUtil jwtutil;
+
     @PostMapping("/api/user/register")
     public ResponseEntity<User> registerUser(@RequestBody User user) {
         User registeredUser = userService.registerUser(user);
@@ -28,7 +32,10 @@ public class RegisterAndLoginController {
     public ResponseEntity<LoginResponse> loginUser(@RequestBody LoginRequest loginRequest) {
         User user = userService.loginUser(loginRequest.getUsername(), loginRequest.getPassword());
         if (user != null) {
-            LoginResponse response = new LoginResponse("token", user.getUsername(), user.getEmail(), user.getRole());
+
+            String tokens= jwtutil.generateToken(loginRequest.getUsername());
+            
+            LoginResponse response = new LoginResponse(tokens, user.getUsername(), user.getEmail(), user.getRole());
             return ResponseEntity.ok(response);
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();

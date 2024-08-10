@@ -1,5 +1,6 @@
 package com.wecp.educationalresourcedistributionsystem.entity;
 
+
 import javax.persistence.*;
 
 @Entity
@@ -10,20 +11,12 @@ public class Resource {
     private Long id;
 
     private String resourceType;
+
     private String description;
 
     @ManyToOne
     @JoinColumn(name = "event_id")
     private Event event;
-
-    public Resource() {
-    }
-
-    public Resource(Long id, String resourceType, String description) {
-        this.id = id;
-        this.resourceType = resourceType;
-        this.description = description;
-    }
 
     public Long getId() {
         return id;
@@ -56,8 +49,5 @@ public class Resource {
     public void setEvent(Event event) {
         this.event = event;
     }
-
-   
-
-    // Constructors, getters, and setters
 }
+

@@ -1,5 +1,6 @@
 package com.wecp.educationalresourcedistributionsystem.controller;
 
+
 import com.wecp.educationalresourcedistributionsystem.entity.Event;
 import com.wecp.educationalresourcedistributionsystem.entity.Resource;
 import com.wecp.educationalresourcedistributionsystem.service.EventService;
@@ -22,33 +23,33 @@ public class InstitutionController {
     @PostMapping("/api/institution/event")
     public ResponseEntity<Event> createEvent(@RequestBody Event event) {
         Event createdEvent = eventService.createEvent(event);
-        return new ResponseEntity<Event>(createdEvent, HttpStatus.OK);
+        return new ResponseEntity<>(createdEvent, HttpStatus.CREATED);
     }
 
     @GetMapping("/api/institution/events")
     public ResponseEntity<List<Event>> getAllEvents() {
         List<Event> events = eventService.getAllEvents();
-        return ResponseEntity.ok(events);
+        return new ResponseEntity<>(events, HttpStatus.OK);
     }
 
     @PostMapping("/api/institution/resource")
     public ResponseEntity<Resource> createResource(@RequestBody Resource resource) {
         Resource createdResource = resourceService.createResource(resource);
-       
-        return new ResponseEntity<>(createdResource,HttpStatus.CREATED);
+        return new ResponseEntity<>(createdResource, HttpStatus.CREATED);
     }
 
     @GetMapping("/api/institution/resources")
     public ResponseEntity<List<Resource>> getAllResources() {
         List<Resource> resources = resourceService.getAllResources();
-        return ResponseEntity.ok(resources);
+        return new ResponseEntity<>(resources, HttpStatus.OK);
     }
 
     @PostMapping("/api/institution/event/allocate-resources")
     public ResponseEntity<Event> allocateResource(@RequestParam("eventId") Long eventId,
-                                                  @RequestParam("resourceId") Long resourceId) {
-        Event updatedEvent = eventService.allocateResourceToEvent(eventId, resourceId);
-        return new ResponseEntity<Event>(updatedEvent, HttpStatus.OK);
+                                                     @RequestParam("resourceId") Long resourceId) {
+        Event event = eventService.allocateResourceToEvent(eventId, resourceId);
+        return new ResponseEntity<>(event, HttpStatus.OK);
     }
-}
 
+
+}
