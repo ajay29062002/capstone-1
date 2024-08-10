@@ -1,42 +1,53 @@
 package com.wecp.educationalresourcedistributionsystem.entity;
 
-
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.util.ArrayList;
 import java.util.List;
 
-@Table(name = "events") // do not change table name
 @Entity
+@Table(name = "events")
 public class Event {
-    // implement entity
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
     private String description;
     private String materials;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name="resource_allocation")
-    private List<Resource> resourceAllocations;
+    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Resource> resourceAllocations = new ArrayList<>();
 
-    
+    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
+    private List<EventRegistration> registrations;
 
+    // Constructors, getters, and setters
 
-
-    public Event(){
+    public Event() {
     }
 
-    public Event(Long id, String name, String description, String materials, List<Resource> resourceAllocations) {
+    
+    
+
+    public Event(Long id, String name, String description, String materials) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.materials = materials;
-        this.resourceAllocations = resourceAllocations;
     }
+
+
+
 
     public Long getId() {
         return id;
     }
+
+  
 
     public void setId(Long id) {
         this.id = id;
@@ -74,8 +85,11 @@ public class Event {
         this.resourceAllocations = resourceAllocations;
     }
 
-    
-    
-    
+    public List<EventRegistration> getRegistrations() {
+        return registrations;
+    }
 
+    public void setRegistrations(List<EventRegistration> registrations) {
+        this.registrations = registrations;
+    }
 }

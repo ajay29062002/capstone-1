@@ -5,18 +5,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class LoginResponse {
     private String token;
-
     private String username;
-
     private String email;
-
     private String role;
 
     @JsonCreator
     public LoginResponse(@JsonProperty("token") String token,
-                         @JsonProperty("username") String username,
-                            @JsonProperty("email") String email,
-                            @JsonProperty("role") String role) {
+            @JsonProperty("username") String username,
+            @JsonProperty("email") String email,
+            @JsonProperty("role") String role) {
         this.token = token;
         this.username = username;
         this.email = email;

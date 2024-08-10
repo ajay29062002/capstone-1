@@ -12,19 +12,20 @@ import java.util.List;
 
 @Service
 public class RegistrationService {
-    
-    private EventRegistration eventRegistration;
+    @Autowired
+    private EventRegistrationRepository registrationRepository;
 
-    registerUser( User user){
+    @Autowired
+    private EventRepository eventRepository;
 
+    public EventRegistration registerForEvent(Long eventId, EventRegistration registration) {
+        Event event = eventRepository.findById(eventId)
+            .orElseThrow(() -> new EntityNotFoundException("Event not found"));
+        registration.setEvent(event);
+        return registrationRepository.save(registration);
     }
 
-    loginUser( LoginRequest loginRequest){
-
+    public List<EventRegistration> getRegistrationsByStudentId(Long studentId) {
+        return registrationRepository.findByStudentId(studentId);
     }
-
-
-
-
-
 }

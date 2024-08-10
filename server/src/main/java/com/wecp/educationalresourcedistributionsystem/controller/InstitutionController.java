@@ -21,41 +21,34 @@ public class InstitutionController {
 
     @PostMapping("/api/institution/event")
     public ResponseEntity<Event> createEvent(@RequestBody Event event) {
-        return new ResponseEntity<Event>(event, HttpStatus.CREATED);
-        // create an event and return created event with status code 201 (CREATED)
+        Event createdEvent = eventService.createEvent(event);
+        return new ResponseEntity<Event>(createdEvent, HttpStatus.OK);
     }
 
     @GetMapping("/api/institution/events")
     public ResponseEntity<List<Event>> getAllEvents() {
-        return new ResponseEntity<>(HttpStatus.OK);
-        // get all events and return the list with status code 200 (OK)
+        List<Event> events = eventService.getAllEvents();
+        return ResponseEntity.ok(events);
     }
 
     @PostMapping("/api/institution/resource")
     public ResponseEntity<Resource> createResource(@RequestBody Resource resource) {
-        return new ResponseEntity<>(resource, HttpStatus.CREATED);
-        // create a resource and return created resource with status code 201 (CREATED)
+        Resource createdResource = resourceService.createResource(resource);
+       
+        return new ResponseEntity<>(createdResource,HttpStatus.CREATED);
     }
 
     @GetMapping("/api/institution/resources")
     public ResponseEntity<List<Resource>> getAllResources() {
-        return new ResponseEntity<>(HttpStatus.OK);
-
-        // get all resources and return the list with status code 200 (OK)
+        List<Resource> resources = resourceService.getAllResources();
+        return ResponseEntity.ok(resources);
     }
 
     @PostMapping("/api/institution/event/allocate-resources")
     public ResponseEntity<Event> allocateResource(@RequestParam("eventId") Long eventId,
-            @RequestParam("resourceId") Long resourceId) {
-
-                Event event= resourceService.allocateResource(eventId, resourceId);
-
-
-
-        return new ResponseEntity<Event>(event, HttpStatus.OK);
-
-        // allocate a resource to an event and return the updated event with status code
-        // 200 (OK)
+                                                  @RequestParam("resourceId") Long resourceId) {
+        Event updatedEvent = eventService.allocateResourceToEvent(eventId, resourceId);
+        return new ResponseEntity<Event>(updatedEvent, HttpStatus.OK);
     }
-
 }
+

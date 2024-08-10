@@ -1,4 +1,5 @@
 package com.wecp.educationalresourcedistributionsystem.controller;
+
 import com.wecp.educationalresourcedistributionsystem.entity.EventRegistration;
 import com.wecp.educationalresourcedistributionsystem.service.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,19 +11,20 @@ import java.util.List;
 
 @RestController
 public class StudentController {
+
     @Autowired
     private RegistrationService registrationService;
 
-
     @PostMapping("/api/student/register/{eventId}")
     public ResponseEntity<EventRegistration> registerForEvent(@PathVariable Long eventId, @RequestBody EventRegistration registration) {
-        return new ResponseEntity<EventRegistration>(registration, HttpStatus.CREATED);
-        // register in an event and return the registration details with status code 201 (CREATED)
+        EventRegistration createdRegistration = registrationService.registerForEvent(eventId, registration);
+       
+        return new ResponseEntity<EventRegistration>(createdRegistration, HttpStatus.CREATED);
     }
 
     @GetMapping("/api/student/registration-status/{studentId}")
     public ResponseEntity<List<EventRegistration>> viewRegistrationStatus(@PathVariable Long studentId) {
-        return new ResponseEntity<>(events,HttpStatus.OK);
-        // return the list of events registered by the student with status code 200 (OK)
+        List<EventRegistration> registrations = registrationService.getRegistrationsByStudentId(studentId);
+        return ResponseEntity.ok(registrations);
     }
 }
