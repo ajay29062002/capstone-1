@@ -8,7 +8,33 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './resource-allocate.component.html',
   styleUrls: ['./resource-allocate.component.scss']
 })
-export class ResourceAllocateComponent 
-//todo: complete missing code..
-  
+export class ResourceAllocateComponent implements OnInit {
+  itemForm: FormGroup;
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private httpService: HttpService,
+    private router: Router
+  ) {
+    this.itemForm = this.formBuilder.group({
+      eventId: ['', Validators.required],
+      resourceId: ['', Validators.required]
+    });
+  }
+
+  ngOnInit(): void {}
+
+  onSubmit(): void {
+    // if (this.itemForm.valid) {
+    //   this.httpService.allocateResource(this.itemForm.value).subscribe(
+    //     response => {
+    //       console.log('Resource allocated successfully', response);
+    //       this.router.navigate(['/resources']);
+    //     },
+    //     error => {
+    //       console.error('Error allocating resource', error);
+    //     }
+    //   );
+    // }
+  }
 }

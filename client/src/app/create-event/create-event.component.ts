@@ -10,7 +10,34 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './create-event.component.html',
   styleUrls: ['./create-event.component.scss']
 })
-export class CreateEventComponent 
-//todo: complete missing code...
-  
+export class CreateEventComponent implements OnInit {
+  itemForm: FormGroup;
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private httpService: HttpService,
+    private router: Router
+  ) {
+    this.itemForm = this.formBuilder.group({
+      name: ['', [Validators.required]],
+      description: ['', [Validators.required]],
+      materials: ['', [Validators.required]]
+    });
+  }
+
+  ngOnInit(): void {}
+
+  onSubmit(): void {
+    if (this.itemForm.valid) {
+      this.httpService.createEvent(this.itemForm.value).subscribe(
+        response => {
+          console.log('Event created successfully', response);
+          this.router.navigate(['/events']);
+        },
+        error => {
+          console.error('Error creating event', error);
+        }
+      );
+    }
+  }
 }

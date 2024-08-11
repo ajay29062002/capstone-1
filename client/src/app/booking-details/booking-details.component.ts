@@ -9,4 +9,6 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './booking-details.component.html',
   styleUrls: ['./booking-details.component.scss']
 })
-export class BookingDetailsComponent 
+export class BookingDetailsComponent {
+  
+}

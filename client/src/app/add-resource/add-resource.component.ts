@@ -10,7 +10,33 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./add-resource.component.scss']
 })
 export class AddResourceComponent implements OnInit {
+  itemForm: FormGroup;
 
- //todo: complete missing code..
-  
+  constructor(
+    private formBuilder: FormBuilder,
+    private httpService: HttpService,
+    private router: Router
+  ) {
+    this.itemForm = this.formBuilder.group({
+      description: ['', [Validators.required]],
+      resourceType: ['', [Validators.required]],
+      availability: ['', [Validators.required]]
+    });
+  }
+
+  ngOnInit(): void {}
+
+  onSubmit(): void {
+    if (this.itemForm.valid) {
+      this.httpService.addResource(this.itemForm.value).subscribe(
+        response => {
+          console.log('Resource added successfully', response);
+          this.router.navigate(['/resources']);
+        },
+        error => {
+          console.error('Error adding resource', error);
+        }
+      );
+    }
+  }
 }
