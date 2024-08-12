@@ -39,8 +39,8 @@ export class RegistrationComponent implements OnInit {
       this.httpService.registerUser(this.itemForm.value).subscribe(data=>{    
         
         this.showMessage=true;
-        this.responseMessage='Welcome '+data.name+" you are successfully registered";
-        this.itemForm.reset();
+        this.responseMessage=`Welcome ${data.username} you are successfully registered`;
+        this.router.navigateByUrl('/login');
         
       },error=>{ })
     }

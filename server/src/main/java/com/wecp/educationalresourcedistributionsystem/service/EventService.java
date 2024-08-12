@@ -36,10 +36,20 @@ public class EventService {
         return eventRepository.save(existingEvent);
     }
 
+    // public Event allocateResourceToEvent(Long eventId, Long resourceId) {
+    //     Event event = eventRepository.findById(eventId).orElseThrow(() -> new EntityNotFoundException("Event not found"));
+    //     Resource resource = resourceRepository.findById(resourceId).orElseThrow(() -> new EntityNotFoundException("Resource not found"));
+    //     event.getResourceAllocations().add(resource);
+    //     return eventRepository.save(event);
+    // }
     public Event allocateResourceToEvent(Long eventId, Long resourceId) {
         Event event = eventRepository.findById(eventId).orElseThrow(() -> new EntityNotFoundException("Event not found"));
         Resource resource = resourceRepository.findById(resourceId).orElseThrow(() -> new EntityNotFoundException("Resource not found"));
+        // Update both sides of the relationship
         event.getResourceAllocations().add(resource);
+        resource.setEvent(event);
+        // Save both entities
+       // resourceRepository.save(resource);
         return eventRepository.save(event);
     }
 }
