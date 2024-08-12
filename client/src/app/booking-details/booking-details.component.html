@@ -1,1 +1,37 @@
-//todo: complete missing code
+<div class="booking-details-container">
+    <h2>Booking Details</h2>
+  
+    <form [formGroup]="formModel" (ngSubmit)="searchEvent()">
+      <div class="form-group">
+        <label for="searchTerm">Search Event:</label>
+        <input type="text" id="searchTerm" formControlName="searchTerm" class="form-control">
+        <div *ngIf="formModel.get('searchTerm').invalid && formModel.get('searchTerm').touched" class="error-message">
+          Search term is required.
+        </div>
+      </div>
+      <button type="submit" [disabled]="formModel.invalid" class="btn btn-primary">Search</button>
+    </form>
+  
+    <div *ngIf="showMessage" class="alert alert-success">
+      {{ responseMessage }}
+    </div>
+  
+    <div *ngIf="showError" class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+  
+    <div *ngIf="eventObj" class="event-details">
+      <h3>Event Details</h3>
+      <p><strong>Name:</strong> {{ eventObj.name }}</p>
+      <p><strong>Date:</strong> {{ eventObj.date }}</p>
+      <p><strong>Location:</strong> {{ eventObj.location }}</p>
+      <!-- Add more event details as needed -->
+    </div>
+  
+    <div *ngIf="eventList && eventList.length > 0" class="event-list">
+      <h3>All Events</h3>
+      <ul>
+        <li *ngFor="let event of eventList">{{ event.name }}</li>
+      </ul>
+    </div>
+  </div>

@@ -1,3 +1,8 @@
 <div class="row text-center">
-<h1 class="text-capitalize">Educational-Event-Management-System</h1>
-</div>
+  <h1 class="text-capitalize">Welcome to Educational Management System</h1>
+  </div>
+  <div *ngIf="role === 'INSTITUTION'">
+    <app-create-event></app-create-event>
+    <app-add-resource></app-add-resource>
+  </div>
+  <app-view-events></app-view-events>

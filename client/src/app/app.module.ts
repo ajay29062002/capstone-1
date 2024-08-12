@@ -21,24 +21,24 @@ import { RegisterForEventComponent } from './register-for-event/register-for-eve
   declarations: [
     AppComponent,
     LoginComponent,
-      RegistrationComponent,
-      DashbaordComponent,    
-      CreateEventComponent,
-      AddResourceComponent,
-      ResourceAllocateComponent,
-      ViewEventsComponent,
-      BookingDetailsComponent,
-   
-      RegisterForEventComponent
+    RegistrationComponent,
+    DashbaordComponent,
+    CreateEventComponent,
+    AddResourceComponent,
+    ResourceAllocateComponent,
+    ViewEventsComponent,
+    BookingDetailsComponent,
+
+    RegisterForEventComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule 
+    HttpClientModule
   ],
-  providers: [HttpService,HttpClientModule ],
+  providers: [HttpService, HttpClientModule],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

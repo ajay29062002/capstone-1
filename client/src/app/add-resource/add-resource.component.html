@@ -1,30 +1,29 @@
 <div class="container">
-    <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
-      <div class="form-group">
-        <label for="description">Description</label>
-        <input id="description" formControlName="description" class="form-control" />
-        <div *ngIf="itemForm.get('description')?.invalid && itemForm.get('description')?.touched" class="text-danger">
-          Description is required.
-        </div>
+  <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="description">Description</label>
+      <input id="description" formControlName="description" class="form-control" />
+      <div *ngIf="itemForm.get('description')?.invalid && itemForm.get('description')?.touched" class="text-danger">
+        Description is required.
       </div>
-  
-      <div class="form-group">
-        <label for="resourceType">Resource Type</label>
-        <input id="resourceType" formControlName="resourceType" class="form-control" />
-        <div *ngIf="itemForm.get('resourceType')?.invalid && itemForm.get('resourceType')?.touched" class="text-danger">
-          Resource Type is required.
-        </div>
+    </div>
+
+    <div class="form-group">
+      <label for="resourceType">Resource Type</label>
+      <input id="resourceType" formControlName="resourceType" class="form-control" />
+      <div *ngIf="itemForm.get('resourceType')?.invalid && itemForm.get('resourceType')?.touched" class="text-danger">
+        Resource Type is required.
       </div>
-  
-      <div class="form-group">
-        <label for="availability">Availability</label>
-        <input id="availability" formControlName="availability" class="form-control" />
-        <div *ngIf="itemForm.get('availability')?.invalid && itemForm.get('availability')?.touched" class="text-danger">
-          Availability is required.
-        </div>
+    </div>
+
+    <div class="form-group">
+      <label for="availability">Availability</label>
+      <input id="availability" formControlName="availability" class="form-control" />
+      <div *ngIf="itemForm.get('availability')?.invalid && itemForm.get('availability')?.touched" class="text-danger">
+        Availability is required.
       </div>
-  
-      <button type="submit" class="btn btn-primary" [disabled]="itemForm.invalid">Add Resource</button>
-    </form>
-  </div>
-  
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="itemForm.invalid">Add Resource</button>
+  </form>
+</div>

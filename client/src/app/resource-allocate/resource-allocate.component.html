@@ -1,22 +1,43 @@
-<div class="container">
-    <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
-      <div class="form-group">
-        <label for="eventId">Event ID</label>
-        <input id="eventId" formControlName="eventId" class="form-control" />
-        <div *ngIf="itemForm.get('eventId')?.invalid && itemForm.get('eventId')?.touched" class="text-danger">
-          Event ID is required.
-        </div>
+<div class="resource-allocate-container">
+  <h2>Allocate Resource to Event</h2>
+
+  <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="eventId">Select Event</label>
+      <select id="eventId" formControlName="eventId" class="form-control">
+        <option value="">Choose an event</option>
+        <option *ngFor="let event of eventList" [value]="event.id">
+          {{ event.name }} - {{ event.date | date }}
+        </option>
+      </select>
+      <div *ngIf="itemForm.get('eventId')?.invalid && (itemForm.get('eventId')?.dirty || itemForm.get('eventId')?.touched)" class="error-message">
+        Event selection is required.
       </div>
-  
-      <div class="form-group">
-        <label for="resourceId">Resource ID</label>
-        <input id="resourceId" formControlName="resourceId" class="form-control" />
-        <div *ngIf="itemForm.get('resourceId')?.invalid && itemForm.get('resourceId')?.touched" class="text-danger">
-          Resource ID is required.
-        </div>
+    </div>
+
+    <div class="form-group">
+      <label for="resourceId">Select Resource</label>
+      <select id="resourceId" formControlName="resourceId" class="form-control">
+        <option value="">Choose a resource</option>
+        <option *ngFor="let resource of resourceList" [value]="resource.id">
+          {{ resource.name }} - {{ resource.type }}
+        </option>
+      </select>
+      <div *ngIf="itemForm.get('resourceId')?.invalid && (itemForm.get('resourceId')?.dirty || itemForm.get('resourceId')?.touched)" class="error-message">
+        Resource selection is required.
       </div>
-  
-      <button type="submit" class="btn btn-primary" [disabled]="itemForm.invalid">Allocate Resource</button>
-    </form>
+    </div>
+
+    <!-- Add more form fields here if needed -->
+
+    <button type="submit" [disabled]="!itemForm.valid" class="btn btn-primary">Allocate Resource</button>
+  </form>
+
+  <div *ngIf="showMessage" class="alert alert-success mt-3">
+    {{ responseMessage }}
   </div>
-  
+
+  <div *ngIf="showError" class="alert alert-danger mt-3">
+    {{ errorMessage }}
+  </div>
+</div>

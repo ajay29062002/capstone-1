@@ -8,80 +8,58 @@ import { AuthService } from './auth.service';
   providedIn: 'root'
 })
 export class HttpService {
-  
-  public serverName=environment.apiUrl;
-//todo: Complete missing code..
- 
-  
-  
-constructor(private http: HttpClient, private authService: AuthService) { }
+  public serverName = environment.apiUrl;
+
+  constructor(private http: HttpClient, private authService: AuthService) {}
 
   private getHeaders(): HttpHeaders {
-
-    const token = this.authService.getToken();
-
     return new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
+      'Authorization': `Bearer ${this.authService.getToken()}`
     });
   }
-  getBookingDetails(studentId: number): Observable<any> {
-    const headers = this.getHeaders();
-    return this.http.get<any>(`${this.serverName}/api/student/registration-status/${studentId}`, { headers });
+
+  getBookingDetails(studentId: any): Observable<any> {
+    return this.http.get(`${this.serverName}/api/student/registration-status/${studentId}`, { headers: this.getHeaders() });
   }
-  GetAllevents(): Observable<any[]> {
-    const headers = this.getHeaders();
-    return this.http.get<any[]>(`${this.serverName}/api/institution/events`, { headers });
+
+  registerForEvent(eventId: any, details: any): Observable<any> {
+    return this.http.post(`${this.serverName}/api/student/register/${eventId}`, details, { headers: this.getHeaders() });
   }
-  GetAllResources(): Observable<any[]> {
-    const headers = this.getHeaders();
-    return this.http.get<any[]>(`${this.serverName}/api/institution/resources`, { headers });
+
+  getAllEventAgenda(): Observable<any> {
+    return this.http.get(`${this.serverName}/api/events/agenda`, { headers: this.getHeaders() });
   }
+
+  GetAllevents(): Observable<any> {
+    return this.http.get(`${this.serverName}/api/institution/events`, { headers: this.getHeaders() });
+  }
+
+  GetAllResources(): Observable<any> {
+    return this.http.get(`${this.serverName}/api/institution/resources`, { headers: this.getHeaders() });
+  }
+
   createEvent(details: any): Observable<any> {
-    const headers = this.getHeaders();
-    return this.http.post<any>(`${this.serverName}/api/institution/event`, details, { headers });
+    return this.http.post(`${this.serverName}/api/institution/event`, details, { headers: this.getHeaders() });
   }
-  updateEvent(details: any, eventId: number): Observable<any> {
-    const headers = this.getHeaders();
-    return this.http.put<any>(`${this.serverName}/api/educator/update-material/${eventId}`, details, { headers });
+
+  updateEvent(details: any, eventId: any): Observable<any> {
+    return this.http.put(`${this.serverName}/api/educator/update-material/${eventId}`, details, { headers: this.getHeaders() });
   }
+
   addResource(details: any): Observable<any> {
-    const headers = this.getHeaders();
-    return this.http.post<any>(`${this.serverName}/api/institution/resource`, details, { headers });
+    return this.http.post(`${this.serverName}/api/institution/resource`, details, { headers: this.getHeaders() });
   }
-  allocateResources(eventId: number, resourceId: number, details: any): Observable<any> {
-    const headers = this.getHeaders();
 
-    return this.http.post<any>(`${this.serverName}/api/institution/event/allocate-resources?eventId=${eventId}&resourceId=${resourceId}`, details, { headers });
-
+  allocateResources(eventId: any, resourceId: any, details: any): Observable<any> {
+    return this.http.post(`${this.serverName}/api/institution/event/allocate-resources?eventId=${eventId}&resourceId=${resourceId}`, details, { headers: this.getHeaders() });
   }
 
   Login(details: any): Observable<any> {
-
-    return this.http.post<any>(`${this.serverName}/api/user/login`, details, {
-
-      headers: new HttpHeaders({
-
-        'Content-Type': 'application/json'
-
-      })
-
-    });
-
+    return this.http.post(`${this.serverName}/api/user/login`, details, { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) });
   }
 
   registerUser(details: any): Observable<any> {
-
-    return this.http.post<any>(`${this.serverName}/api/user/register`, details, {
-
-      headers: new HttpHeaders({
-
-        'Content-Type': 'application/json'
-
-      })
-
-    });
-
+    return this.http.post(`${this.serverName}/api/user/register`, details, { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) });
   }
-
 }

@@ -11,32 +11,65 @@ import { AuthService } from '../../services/auth.service';
 })
 export class AddResourceComponent implements OnInit {
   itemForm: FormGroup;
+  formModel: any = {};
+  showError: boolean = false;
+  errorMessage: any;
+  resourceList: any;
+  assignModel: any = {};
+  showMessage: any;
+  responseMessage: any;
 
   constructor(
     private formBuilder: FormBuilder,
+    private router: Router,
     private httpService: HttpService,
-    private router: Router
+    private authService: AuthService
   ) {
     this.itemForm = this.formBuilder.group({
+     // Add form controls here
+      //For example:
       description: ['', [Validators.required]],
       resourceType: ['', [Validators.required]],
       availability: ['', [Validators.required]]
+      
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getResources();
+  }
 
   onSubmit(): void {
     if (this.itemForm.valid) {
+      // Handle form submission
+      // For example:
       this.httpService.addResource(this.itemForm.value).subscribe(
-        response => {
-          console.log('Resource added successfully', response);
-          this.router.navigate(['/resources']);
+        (response) => {
+          this.showMessage = true;
+          this.responseMessage = 'Resource added successfully';
+          this.getResources(); // Refresh the resource list
         },
-        error => {
-          console.error('Error adding resource', error);
+        (error) => {
+          this.showError = true;
+          this.errorMessage = 'Failed to add resource';
         }
       );
+    } else {
+      this.itemForm.markAllAsTouched();
     }
+  }
+
+  getResources(): void {
+    // Fetch resources from the server
+    // For example:
+    this.httpService.GetAllResources().subscribe(
+      (data) => {
+        this.resourceList = data;
+      },
+      (error) => {
+        this.showError = true;
+        this.errorMessage = 'Failed to fetch resources';
+      }
+    );
   }
 }

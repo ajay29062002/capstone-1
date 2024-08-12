@@ -12,33 +12,41 @@ import { HttpService } from '../../services/http.service';
 })
 export class RegistrationComponent implements OnInit {
   itemForm: FormGroup;
+  formModel:any={role:null,email:'',password:'',username:''};
+  showMessage:boolean=false;
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private authService: AuthService,
-    private router: Router
-  ) {
-    this.itemForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
-      role: [null, Validators.required],
-      username: ['', Validators.required]
+  responseMessage: any;
+  constructor(public router:Router, private httpService:HttpService, private formBuilder: FormBuilder) { 
+    
+      this.itemForm = this.formBuilder.group({
+        email: [this.formModel.email,[ Validators.required, Validators.email]],
+        password: [this.formModel.password,[ Validators.required]],
+        role: [this.formModel.role,[ Validators.required]],
+        username: [this.formModel.username,[ Validators.required]],
+       
     });
   }
 
   ngOnInit(): void {}
 
-  onSubmit(): void {
-    // if (this.itemForm.valid) {
-    //   this.authService.register(this.itemForm.value).subscribe(
-    //     response => {
-    //       console.log('Registration successful', response);
-    //       this.router.navigate(['/login']);
-    //     },
-    //     error => {
-    //       console.error('Registration failed', error);
-    //     }
-    //   );
-    // }
+  onRegister(): void {
+
+    
+
+    if(this.itemForm.valid)
+    {
+      this.showMessage=false;
+      this.httpService.registerUser(this.itemForm.value).subscribe(data=>{    
+        
+        this.showMessage=true;
+        this.responseMessage='Welcome '+data.name+" you are successfully registered";
+        this.itemForm.reset();
+        
+      },error=>{ })
+    }
+    else{
+      this.itemForm.markAllAsTouched();
+    }
   }
-}
+  }
+

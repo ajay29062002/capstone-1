@@ -1,42 +1,61 @@
 <div class="container">
-    <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
-      <div class="form-group">
+  <h2>Registration</h2>
+
+  <form [formGroup]="itemForm" (ngSubmit)="onRegister()">
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input type="text" id="username" formControlName="username" class="form-control">
+      <div *ngIf="itemForm.get('username')?.touched && itemForm.get('username')?.invalid" class="alert alert-danger">
+        Username is required.
+      </div>
+    </div>
+
+    <!-- <div class="form-group">
         <label for="email">Email</label>
-        <input id="email" formControlName="email" class="form-control" />
-        <div *ngIf="itemForm.get('email')?.invalid && itemForm.get('email')?.touched" class="text-danger">
-          Valid email is required.
+        <input type="email" id="email" formControlName="email" class="form-control">
+        <div *ngIf="itemForm.get('email')?.touched && itemForm.get('email')?.invalid" class="alert alert-danger">
+          <div *ngIf="itemForm.get('email')?.errors?.required">Email is required.</div>
+          <div *ngIf="itemForm.get('email')?.errors?.email">Please enter a valid email address.</div>
         </div>
       </div>
-  
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input id="password" type="password" formControlName="password" class="form-control" />
-        <div *ngIf="itemForm.get('password')?.invalid && itemForm.get('password')?.touched" class="text-danger">
-          Password is required.
-        </div>
+   -->
+
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" formControlName="email" class="form-control">
+      <div *ngIf="itemForm.get('email')?.touched && itemForm.get('email')?.invalid" class="alert alert-danger">
+        <div *ngIf="itemForm.get('email')?.errors?.['required']">Email is required.</div>
+        <div *ngIf="itemForm.get('email')?.errors?.['email']">Please enter a valid email address.</div>
       </div>
-  
-      <div class="form-group">
-        <label for="role">Role</label>
-        <select id="role" formControlName="role" class="form-control">
-          <option value="" disabled>Select role</option>
-          <option value="user">User</option>
-          <option value="admin">Admin</option>
-        </select>
-        <div *ngIf="itemForm.get('role')?.invalid && itemForm.get('role')?.touched" class="text-danger">
-          Role is required.
-        </div>
+    </div>
+
+
+
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" formControlName="password" class="form-control">
+      <div *ngIf="itemForm.get('password')?.touched && itemForm.get('password')?.invalid" class="alert alert-danger">
+        Password is required.
       </div>
-  
-      <div class="form-group">
-        <label for="username">Username</label>
-        <input id="username" formControlName="username" class="form-control" />
-        <div *ngIf="itemForm.get('username')?.invalid && itemForm.get('username')?.touched" class="text-danger">
-          Username is required.
-        </div>
+    </div>
+
+    <div class="form-group">
+      <label for="role">Role</label>
+      <select id="role" formControlName="role" class="form-control">
+        <option value="">Select a role</option>
+        <option value="student">Student</option>
+        <option value="teacher">Teacher</option>
+        <!-- Add more role options as needed -->
+      </select>
+      <div *ngIf="itemForm.get('role')?.touched && itemForm.get('role')?.invalid" class="alert alert-danger">
+        Role is required.
       </div>
-  
-      <button type="submit" class="btn btn-primary" [disabled]="itemForm.invalid">Register</button>
-    </form>
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="!itemForm.valid">Register</button>
+  </form>
+
+  <div *ngIf="showMessage" class="alert alert-success mt-3">
+    {{ responseMessage }}
   </div>
-  
+</div>
