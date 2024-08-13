@@ -17,6 +17,7 @@ export class ResourceAllocateComponent implements OnInit {
   showMessage: any;
   responseMessage: any;
   eventList: any;
+  
 
   constructor(
     private formBuilder: FormBuilder,

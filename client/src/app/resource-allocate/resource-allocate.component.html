@@ -7,7 +7,7 @@
       <select id="eventId" formControlName="eventId" class="form-control">
         <option value="">Choose an event</option>
         <option *ngFor="let event of eventList" [value]="event.id">
-          {{ event.name }} - {{ event.date | date }}
+          {{ event.name }} 
         </option>
       </select>
       <div *ngIf="itemForm.get('eventId')?.invalid && (itemForm.get('eventId')?.dirty || itemForm.get('eventId')?.touched)" class="error-message">
@@ -20,7 +20,7 @@
       <select id="resourceId" formControlName="resourceId" class="form-control">
         <option value="">Choose a resource</option>
         <option *ngFor="let resource of resourceList" [value]="resource.id">
-          {{ resource.name }} - {{ resource.type }}
+          {{ resource.id }} - {{resource.resourceType}}
         </option>
       </select>
       <div *ngIf="itemForm.get('resourceId')?.invalid && (itemForm.get('resourceId')?.dirty || itemForm.get('resourceId')?.touched)" class="error-message">

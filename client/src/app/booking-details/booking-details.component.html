@@ -1,37 +1,43 @@
-<div class="booking-details-container">
-    <h2>Booking Details</h2>
+<div class="container">
+  <h2>Event Registration Status</h2>
   
-    <form [formGroup]="formModel" (ngSubmit)="searchEvent()">
-      <div class="form-group">
-        <label for="searchTerm">Search Event:</label>
-        <input type="text" id="searchTerm" formControlName="searchTerm" class="form-control">
-        <div *ngIf="formModel.get('searchTerm').invalid && formModel.get('searchTerm').touched" class="error-message">
-          Search term is required.
-        </div>
-      </div>
-      <button type="submit" [disabled]="formModel.invalid" class="btn btn-primary">Search</button>
-    </form>
-  
-    <div *ngIf="showMessage" class="alert alert-success">
-      {{ responseMessage }}
+  <form [formGroup]="formModel" (ngSubmit)="searchEvent()">
+    <div class="search-section">
+      <label for="studentId">Student ID</label>
+      <input type="text" id="studentId" formControlName="searchTerm" class="form-control">
+      <button type="submit" class="btn btn-primary">Search</button>
     </div>
-  
-    <div *ngIf="showError" class="alert alert-danger">
-      {{ errorMessage }}
-    </div>
-  
-    <div *ngIf="eventObj" class="event-details">
-      <h3>Event Details</h3>
-      <p><strong>Name:</strong> {{ eventObj.name }}</p>
-      <p><strong>Date:</strong> {{ eventObj.date }}</p>
-      <p><strong>Location:</strong> {{ eventObj.location }}</p>
-      <!-- Add more event details as needed -->
-    </div>
-  
-    <div *ngIf="eventList && eventList.length > 0" class="event-list">
-      <h3>All Events</h3>
-      <ul>
-        <li *ngFor="let event of eventList">{{ event.name }}</li>
-      </ul>
-    </div>
+  </form>
+
+  <div *ngIf="eventObj" class="booking-info">
+    <h3>Booking Information</h3>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Sr#</th>
+          <th>Status</th>
+          <th>Event</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let event of eventObj; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ event.status }}</td>
+          <td>
+            <div>Description: {{ event.description }}</div>
+            <div>Materials: {{ event.materials }}</div>
+            <div>Name: {{ event.name }}</div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
+
+  <div *ngIf="showMessage" class="alert alert-success mt-3">
+    {{ responseMessage }}
+  </div>
+  
+  <div *ngIf="showError" class="alert alert-danger mt-3">
+    {{ errorMessage }}
+  </div>
+</div>
