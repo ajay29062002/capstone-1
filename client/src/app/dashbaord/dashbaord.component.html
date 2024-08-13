@@ -4,11 +4,17 @@
   <div *ngIf="role === 'INSTITUTION'">
     <app-create-event></app-create-event>
     <app-add-resource></app-add-resource>
-    <app-view-events></app-view-events>
+    <!-- <app-view-events></app-view-events> -->
   </div>
  
 
   <div *ngIf="role === 'STUDENT'">
     <app-register-for-event></app-register-for-event>
-    <app-view-events></app-view-events>
+    <!-- <app-view-events></app-view-events> -->
+    <app-booking-details></app-booking-details>
     </div>
+
+    <div *ngIf="role === 'EDUCATOR'">
+      <!-- <app-register-for-event></app-register-for-event> -->
+      <app-view-events></app-view-events>
+      </div>

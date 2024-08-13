@@ -34,7 +34,7 @@ export class BookingDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     // Initialization logic
-    this.getEvents();
+    // this.getEvents();
   }
 
   searchEvent(): void {
@@ -42,15 +42,30 @@ export class BookingDetailsComponent implements OnInit {
       const searchTerm = this.formModel.get('searchTerm')?.value;
       this.httpService.getBookingDetails(searchTerm).subscribe(
         (response) => {
+          this.errorMessage=''
+          alert(response.length===0)
+          if(response.length!==0){
+          console.log(response);
           this.eventObj = response;
           this.showMessage = true;
           this.responseMessage = 'Event found';
-        },
-        (error) => {
+          }
+          else{
+            this.responseMessage=''
+          alert("Not found")
           this.showError = true;
           this.errorMessage = 'Failed to find event';
-          console.error('Error searching event:', error);
+          console.error('Error searching event:', response);
+          }
+          // this.getEvents();
         }
+        // ,
+        // (error) => {
+        //   alert("Not found")
+        //   this.showError = true;
+        //   this.errorMessage = 'Failed to find event';
+        //   console.error('Error searching event:', error);
+        // }
       );
     } else {
       this.formModel.markAllAsTouched();
@@ -61,6 +76,7 @@ export class BookingDetailsComponent implements OnInit {
     this.httpService.GetAllevents().subscribe(
       (data) => {
         this.eventList = data;
+        alert("Hello");
       },
       (error) => {
         this.showError = true;
