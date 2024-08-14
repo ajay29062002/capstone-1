@@ -73,6 +73,10 @@ export class HttpService {
     return this.http.get(`${this.serverName}/api/user/users`, { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) });
   }
 
+  deleteResource(resourceId:any){
+    return this.http.delete(`${this.serverName}/api/institution/resources/${resourceId}`, { headers: this.getHeaders() });
+
+  }
   
 
   

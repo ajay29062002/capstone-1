@@ -58,7 +58,12 @@ export class AddResourceComponent implements OnInit {
       this.itemForm.markAllAsTouched();
     }
   }
-
+  onDelete(resourceId: any): void {
+    //  alert(eventId);
+      this.httpService.deleteResource(resourceId).subscribe(()=>{
+        this.getResources();
+            });
+          }
   getResources(): void {
     // Fetch resources from the server
     // For example:

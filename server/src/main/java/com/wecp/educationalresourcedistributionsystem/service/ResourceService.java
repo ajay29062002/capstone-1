@@ -20,4 +20,9 @@ public class ResourceService {
     public List<Resource> getAllResources() {
         return resourceRepository.findAll();
     }
+
+    public void deleteResource(Long resourceId) {
+        resourceRepository.deleteById(resourceId);
+
+    }
 }

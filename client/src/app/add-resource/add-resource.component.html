@@ -22,7 +22,11 @@
           </div>
           <div class="form-group col-md-4">
             <label for="availability">Availability</label>
-            <input type="text" id="availability" formControlName="availability" class="form-control" placeholder="Availability">
+            <select id="availability" formControlName="availability" class="form-control">
+              <option value="" disabled selected>Select availability</option>
+              <option value="available">Available</option>
+              <option value="unavailable">Unavailable</option>
+            </select>
             <div *ngIf="itemForm.get('availability')?.invalid && itemForm.get('availability')?.touched" class="text-danger">
               Availability is required.
             </div>
@@ -50,11 +54,14 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let resource of resourceList; let i = index">
+          <tr *ngFor="let resource of resourceList;">
             <td>{{ resource.id }}</td>
             <td>{{ resource.description }}</td>
             <td>{{ resource.resourceType }}</td>
             <td>{{ resource.availability }}</td>
+            <td>
+              <button (click)="onDelete(resource.id)">Delete</button>
+            </td>
           </tr>
         </tbody>
       </table>

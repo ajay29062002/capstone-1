@@ -57,6 +57,12 @@ public class InstitutionController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @DeleteMapping("/api/institution/resources/{resourceId}")
+    public ResponseEntity<Void> deleteResource(@PathVariable Long resourceId){
+        resourceService.deleteResource(resourceId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     
 
 }
