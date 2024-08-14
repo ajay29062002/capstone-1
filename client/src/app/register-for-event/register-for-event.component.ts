@@ -18,38 +18,57 @@ export class RegisterForEventComponent implements OnInit {
   showMessage: any;
   responseMessage: any;
   isUpdate: any;
+  eventList: any;
 
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
     private httpService: HttpService,
     private authService: AuthService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.initForm();
+    this.getEvent();
   }
 
   initForm() {
     this.formModel = this.formBuilder.group({
       eventId: ['', Validators.required],
       studentId: ['', Validators.required],
-      status: ['registered'] 
+      status: ['registered']
     });
+  }
+
+  getEvent(): void {
+    this.httpService.GetAllevents().subscribe(
+      (data) => {
+        this.eventList = data;
+      },
+      (error) => {
+        this.showError = true;
+        this.errorMessage = 'Failed to fetch events';
+        console.error('Error fetching events:', error);
+      }
+    );
   }
 
   submit() {
     if (this.formModel.valid) {
       const eventId = this.formModel.get('eventId').value;
       const studentId = this.formModel.get('studentId').value;
-      
-      this.httpService.registerForEvent(eventId, { studentId }).subscribe(
+
+
+
+      this.httpService.registerForEvent(eventId, studentId).subscribe(
         (response) => {
+          this.showError = false
           this.showMessage = true;
           this.responseMessage = 'Registration successful';
           this.formModel.reset();
         },
         (error) => {
+          this.showMessage = false;
           this.showError = true;
           this.errorMessage = error.message || 'An error occurred during registration';
         }

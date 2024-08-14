@@ -21,64 +21,64 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableMethodSecurity
 public class SecurityConfig {
 
-        private final UserDetailsService userDetailsService;
-        private final JwtRequestFilter jwtRequestFilter;
-        private final PasswordEncoder passwordEncoder;
+    private final UserDetailsService userDetailsService;
+    private final JwtRequestFilter jwtRequestFilter;
+    private final PasswordEncoder passwordEncoder;
 
-        @Autowired
-        public SecurityConfig(UserDetailsService userDetailsService,
-                        JwtRequestFilter jwtRequestFilter,
-                        PasswordEncoder passwordEncoder) {
-                this.userDetailsService = userDetailsService;
-                this.jwtRequestFilter = jwtRequestFilter;
-                this.passwordEncoder = passwordEncoder;
-        }
+    @Autowired
+    public SecurityConfig(UserDetailsService userDetailsService,
+            JwtRequestFilter jwtRequestFilter,
+            PasswordEncoder passwordEncoder) {
+        this.userDetailsService = userDetailsService;
+        this.jwtRequestFilter = jwtRequestFilter;
+        this.passwordEncoder = passwordEncoder;
+    }
 
-        @Bean
-        public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-                http.cors().and().csrf().disable()
-                                .authorizeHttpRequests(authz -> authz
-                                                .antMatchers("/api/user/register", "/api/user/login", "/api/user/users")
-                                                .permitAll()
-                                                .antMatchers(HttpMethod.POST, "/api/institution/event")
-                                                .hasAnyAuthority("INSTITUTION")
-                                                .antMatchers(HttpMethod.GET, "/api/institution/events")
-                                                .hasAnyAuthority("INSTITUTION")
-                                                .antMatchers(HttpMethod.POST, "/api/institution/resource")
-                                                .hasAnyAuthority("INSTITUTION")
-                                                .antMatchers(HttpMethod.GET, "/api/institution/resources")
-                                                .hasAnyAuthority("INSTITUTION")
-                                                .antMatchers(HttpMethod.POST, "/api/institution/event")
-                                                .hasAnyAuthority("INSTITUTION")
-                                                .antMatchers(HttpMethod.POST,
-                                                                "/api/institution/event/allocate-resources")
-                                                .hasAnyAuthority("INSTITUTION")
-                                                .antMatchers(HttpMethod.DELETE, "/api/institution/events/{eventId}")
-                                                .hasAnyAuthority("INSTITUTION")
-                                                .antMatchers(HttpMethod.GET, "/api/educator/agenda")
-                                                .hasAnyAuthority("EDUCATOR")
-                                                .antMatchers(HttpMethod.PUT,
-                                                                "/api/educator/update-material/{eventId}")
-                                                .hasAnyAuthority("EDUCATOR")
-                                                .antMatchers(HttpMethod.POST, "/api/student/register/{eventId}")
-                                                .hasAnyAuthority("STUDENT")
-                                                .antMatchers(HttpMethod.GET,
-                                                                "/api/student/registration-status/{studentId}")
-                                                .hasAnyAuthority("STUDENT")
-                                                .anyRequest().authenticated())
-                                .sessionManagement(session -> session
-                                                .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.cors().and().csrf().disable()
+                .authorizeHttpRequests(authz -> authz
+                        .antMatchers("/api/user/register", "/api/user/login", "/api/user/users")
+                        .permitAll()
+                        .antMatchers(HttpMethod.POST, "/api/institution/event")
+                        .hasAnyAuthority("INSTITUTION")
+                        .antMatchers(HttpMethod.GET, "/api/institution/events")
+                        .hasAnyAuthority("INSTITUTION", "STUDENT")
+                        .antMatchers(HttpMethod.POST, "/api/institution/resource")
+                        .hasAnyAuthority("INSTITUTION")
+                        .antMatchers(HttpMethod.GET, "/api/institution/resources")
+                        .hasAnyAuthority("INSTITUTION")
+                        .antMatchers(HttpMethod.POST, "/api/institution/event")
+                        .hasAnyAuthority("INSTITUTION")
+                        .antMatchers(HttpMethod.POST,
+                                "/api/institution/event/allocate-resources")
+                        .hasAnyAuthority("INSTITUTION")
+                        .antMatchers(HttpMethod.DELETE, "/api/institution/events/{eventId}")
+                        .hasAnyAuthority("INSTITUTION")
+                        .antMatchers(HttpMethod.GET, "/api/educator/agenda")
+                        .hasAnyAuthority("EDUCATOR")
+                        .antMatchers(HttpMethod.PUT,
+                                "/api/educator/update-material/{eventId}")
+                        .hasAnyAuthority("EDUCATOR")
+                        .antMatchers(HttpMethod.POST, "/api/student/register/{eventId}")
+                        .hasAnyAuthority("STUDENT")
+                        .antMatchers(HttpMethod.GET,
+                                "/api/student/registration-status/{studentId}")
+                        .hasAnyAuthority("STUDENT")
+                        .anyRequest().authenticated())
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
-                return http.build();
-        }
+        return http.build();
+    }
 
-        @Bean
-        public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
-                return http.getSharedObject(AuthenticationManagerBuilder.class)
-                                .userDetailsService(userDetailsService)
-                                .passwordEncoder(passwordEncoder)
-                                .and()
-                                .build();
-        }
+    @Bean
+    public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
+        return http.getSharedObject(AuthenticationManagerBuilder.class)
+                .userDetailsService(userDetailsService)
+                .passwordEncoder(passwordEncoder)
+                .and()
+                .build();
+    }
 }

@@ -13,7 +13,7 @@ public class EventRegistration {
     private Long studentId;
 
     @ManyToOne
-    @JoinColumn(name = "eventID")
+    @JoinColumn(name = "eventId")
     private Event event;
 
     public EventRegistration() {
