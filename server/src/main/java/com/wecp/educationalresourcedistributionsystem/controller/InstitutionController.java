@@ -51,5 +51,12 @@ public class InstitutionController {
         return new ResponseEntity<>(event, HttpStatus.OK);
     }
 
+    @DeleteMapping("/api/institution/events/{eventId}")
+    public ResponseEntity<Void> deleteEvent(@PathVariable Long eventId){
+        eventService.deleteEvent(eventId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    
 
 }

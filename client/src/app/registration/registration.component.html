@@ -1,13 +1,17 @@
 <div class="registration-container">
-  <h2>EDUCATIONAL-EVENT-MANAGEMENT-SYSTEM</h2>
+  <h2>EDUCATIONAL EVENT MANAGEMENT SYSTEM</h2>
   <p>Please enter your details here</p>
 
   <form [formGroup]="itemForm" (ngSubmit)="onRegister()">
     <div class="form-group">
       <label for="username">Username</label>
       <input type="text" id="username" formControlName="username" class="form-control" placeholder="Username">
-      <div *ngIf="itemForm.get('username')?.touched && itemForm.get('username')?.invalid" class="error-message">
+      <div *ngIf="itemForm.get('username')?.touched && itemForm.get('username')?.errors?.['required']"
+        class="error-message">
         Username is required.
+      </div>
+      <div *ngIf="itemForm.get('username')?.errors?.['notUnique']" class="error-message">
+        User already exists.
       </div>
     </div>
 
@@ -31,9 +35,11 @@
       </div> -->
       <div *ngIf="itemForm.get('password')?.touched && itemForm.get('password')?.invalid" class="error-message">
         <div *ngIf="itemForm.get('password')?.errors?.['required']">Password is required.</div>
-        <div *ngIf="itemForm.controls['password'].invalid && itemForm.controls['password'].touched">Password must be in this format : atleast 1 uppercase, atleast 1 lowercase , atleast 1 special character, minimum 8 characters.</div>
+        <div *ngIf="itemForm.controls['password'].invalid && itemForm.controls['password'].touched">Password must be in
+          this format : atleast 1 uppercase, atleast 1 lowercase , atleast 1 special character, minimum 8 characters.
+        </div>
 
-       
+
       </div>
     </div>
 

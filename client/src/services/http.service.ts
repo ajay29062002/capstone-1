@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../environments/environment.development';
 import { AuthService } from './auth.service';
+import { TitleStrategy } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -62,6 +63,17 @@ export class HttpService {
   registerUser(details: any): Observable<any> {
     return this.http.post(`${this.serverName}/api/user/register`, details, { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) });
   }
+
+  deleteEvent(eventId:any){
+    return this.http.delete(`${this.serverName}/api/institution/events/${eventId}`, { headers: this.getHeaders() });
+
+  }
+
+  getAllUsers(): Observable<any> {
+    return this.http.get(`${this.serverName}/api/user/users`, { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) });
+  }
+
+  
 
   
 

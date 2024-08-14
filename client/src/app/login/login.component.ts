@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit {
       }, error => {
         // Handle error
         this.showError = true;
-        this.errorMessage = "An error occurred while logging in. Please try again later.";
+        this.errorMessage = "Bad Credentials! Please try again.";
         console.error('Login error:', error);
       });;
     } else {

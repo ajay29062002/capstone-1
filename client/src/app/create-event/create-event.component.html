@@ -47,6 +47,7 @@
             <th>Name</th>
             <th>Description</th>
             <th>Material</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
@@ -55,7 +56,11 @@
             <td>{{ event.name }}</td>
             <td>{{ event.description }}</td>
             <td>{{ event.materials }}</td>
+            <td>
+              <button (click)="onDelete(event.id)">Delete</button>
+            </td>
           </tr>
+
         </tbody>
       </table>
     </div>

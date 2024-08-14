@@ -69,4 +69,16 @@ export class CreateEventComponent implements OnInit {
       this.itemForm.markAllAsTouched();
     }
   }
+
+
+
+  onDelete(eventId: any): void {
+  //  alert(eventId);
+    this.httpService.deleteEvent(eventId).subscribe(()=>{
+      this.getEvent();
+          });
+   
+    
+  
+  }
 }
