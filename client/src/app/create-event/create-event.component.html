@@ -1,64 +1,35 @@
-<!-- <div class="container">
-  <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
-    <div class="form-group">
-      <label for="name">Name</label>
-      <input id="name" formControlName="name" class="form-control" />
-      <div *ngIf="itemForm.get('name')?.invalid && itemForm.get('name')?.touched" class="text-danger">
-        Name is required.
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="description">Description</label>
-      <input id="description" formControlName="description" class="form-control" />
-      <div *ngIf="itemForm.get('description')?.invalid && itemForm.get('description')?.touched" class="text-danger">
-        Description is required.
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="materials">Materials</label>
-      <input id="materials" formControlName="materials" class="form-control" />
-      <div *ngIf="itemForm.get('materials')?.invalid && itemForm.get('materials')?.touched" class="text-danger">
-        Materials are required.
-      </div>
-    </div>
-
-    <button type="submit" class="btn btn-primary" [disabled]="itemForm.invalid">Create Event</button>
-  </form>
-</div> -->
-
-
 <div class="container">
-  <h1>Manage Event</h1>
+  <h1 class="my-4 text-center">Manage Event</h1>
   
-  <div class="card">
+  <div class="card mb-4">
     <div class="card-header">Create Event</div>
     <div class="card-body">
       <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
         <div class="form-row">
           <div class="form-group col-md-4">
             <label for="name">Name</label>
-            <input type="text" id="name" formControlName="name" class="form-control" placeholder="name">
-             <div *ngIf="itemForm.get('name')?.invalid && itemForm.get('name')?.touched" class="text-danger">
-        Name is required.
-      </div>
+            <input type="text" id="name" formControlName="name" class="form-control" placeholder="Name">
+            <div *ngIf="itemForm.get('name')?.invalid && itemForm.get('name')?.touched" class="text-danger">
+              Name is required.
+            </div>
           </div>
           <div class="form-group col-md-4">
             <label for="description">Description</label>
-            <input type="text" id="description" formControlName="description" class="form-control" placeholder="description">
+            <input type="text" id="description" formControlName="description" class="form-control" placeholder="Description">
             <div *ngIf="itemForm.get('description')?.invalid && itemForm.get('description')?.touched" class="text-danger">
               Description is required.
             </div>
           </div>
-          <div class="form-group col-md-3">
+          <div class="form-group col-md-4">
             <label for="materials">Materials</label>
-            <input type="text" id="materials" formControlName="materials" class="form-control" placeholder="materials">
+            <input type="text" id="materials" formControlName="materials" class="form-control" placeholder="Materials">
             <div *ngIf="itemForm.get('materials')?.invalid && itemForm.get('materials')?.touched" class="text-danger">
               Materials are required.
             </div>
           </div>
-          <div class="form-group col-md-1 d-flex align-items-end">
+        </div>
+        <div class="form-row mt-3">
+          <div class="col-md-12 d-flex justify-content-center">
             <button type="submit" class="btn btn-primary" [disabled]="itemForm.invalid">Submit</button>
           </div>
         </div>
@@ -66,31 +37,27 @@
     </div>
   </div>
 
-  
-    
-   
-  
-    <div class="card mt-4">
-      <div class="card-header">Event Information</div>
-      <div class="card-body">
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th>Sr#</th>
-              <th>Name</th>
-              <th>Description</th>
-              <th>Material</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let event of eventList; let i = index">
-              <td>{{ event.id }}</td>
-              <td>{{ event.name }}</td>
-              <td>{{ event.description }}</td>
-              <td>{{ event.materials }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+  <div class="card mt-4">
+    <div class="card-header">Event Information</div>
+    <div class="card-body">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Sr#</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Material</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let event of eventList; let i = index">
+            <td>{{ event.id }}</td>
+            <td>{{ event.name }}</td>
+            <td>{{ event.description }}</td>
+            <td>{{ event.materials }}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
+</div>

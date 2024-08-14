@@ -1,5 +1,6 @@
+import { identifierName } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { HttpService } from '../../services/http.service';
@@ -20,14 +21,46 @@ export class RegistrationComponent implements OnInit {
     
       this.itemForm = this.formBuilder.group({
         email: [this.formModel.email,[ Validators.required, Validators.email]],
-        password: [this.formModel.password,[ Validators.required]],
-        role: [this.formModel.role,[ Validators.required]],
+        password: [this.formModel.password,[ Validators.required,this.passwordValidator]],
+        role: ['',[ Validators.required]],
         username: [this.formModel.username,[ Validators.required]],
        
     });
   }
 
   ngOnInit(): void {}
+
+  passwordValidator(control: AbstractControl): { [key: string]: boolean } | null {
+    const password = control.value;
+    const regexPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+
+
+    if (!regexPattern.test(password)) {
+      return { invalidPassword: true };
+    }
+
+    return null;
+  }
+
+  // uniqueIdValidator (control: AbstractControl): ValidationErrors | null  {
+  //   const userName=control.value;
+  //   let value=JSON.parse(localStorage.getItem('userName') || '{}');
+  //   const UserName = value.map((id:any)=> id.username);
+  //   if(UserName.includes(userName)){
+  //     return {unique :true};
+  //   }
+
+  //   return null;
+  // //   const userName= control.value;
+  // //   let value=JSON.parse(localStorage.getItem('userName') || '{}');
+  // //     const UserName = value.map((id:any) => id.policyNumber);
+  // //     if (policyIDd.includes(employeeID)) {
+  // //      return { unique: true }; // Validation failed because the ID is not unique
+  // //    } 
+  // //     return null; // Validation passed, ID is unique
+  //  }
+
+
 
   onRegister(): void {
 

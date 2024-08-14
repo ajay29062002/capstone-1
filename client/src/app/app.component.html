@@ -6,8 +6,8 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-            <li class="nav-item" class="nav-link" style="color: aliceblue;">
-                Educational Event Management
+            <li class="nav-item" class="nav-link" style="color: aliceblue ; ">
+              Welcome to Educational Event Management
                 </li>
 
             <li class="nav-item">
@@ -35,9 +35,9 @@
 
         <!-- Login/Logout buttons -->
         <ul class="navbar-nav">
-            <li *ngIf="!IsLoggin" class="nav-item">
+            <!-- <li *ngIf="!IsLoggin" class="nav-item">
                 <a class="nav-link" [routerLink]="['/login']">Login</a>
-            </li>
+            </li> -->
             <li *ngIf="IsLoggin" class="nav-item">
                 <a class="nav-link" (click)="logout()" [routerLink]="['/login']">Logout</a>
             </li>

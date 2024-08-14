@@ -20,13 +20,13 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let event of eventObj; let i = index">
-          <td>{{ i + 1 }}</td>
+        <tr *ngFor="let event of eventObj; ">
+          <td>{{ event.id }}</td>
           <td>{{ event.status }}</td>
           <td>
-            <div>Description: {{ event.description }}</div>
-            <div>Materials: {{ event.materials }}</div>
-            <div>Name: {{ event.name }}</div>
+            <div>Description: {{ event.event.description }}</div>
+            <div>Materials: {{ event.event.materials }}</div>
+            <div>Name: {{ event.event.name }}</div>
           </td>
         </tr>
       </tbody>

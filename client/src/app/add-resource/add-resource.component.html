@@ -1,33 +1,35 @@
 <div class="container">
-  <h1>Manage Resource</h1>
+  <h1 class="my-4 text-center">Manage Resource</h1>
   
-  <div class="card">
+  <div class="card mb-4">
     <div class="card-header">Add Resource</div>
     <div class="card-body">
       <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
         <div class="form-row">
           <div class="form-group col-md-4">
             <label for="description">Description</label>
-            <input type="text" id="description" formControlName="description" class="form-control" placeholder="description">
+            <input type="text" id="description" formControlName="description" class="form-control" placeholder="Description">
             <div *ngIf="itemForm.get('description')?.invalid && itemForm.get('description')?.touched" class="text-danger">
               Description is required.
             </div>
           </div>
           <div class="form-group col-md-4">
             <label for="resourceType">Resource Type</label>
-            <input type="text" id="resourceType" formControlName="resourceType" class="form-control" placeholder="resource type">
+            <input type="text" id="resourceType" formControlName="resourceType" class="form-control" placeholder="Resource Type">
             <div *ngIf="itemForm.get('resourceType')?.invalid && itemForm.get('resourceType')?.touched" class="text-danger">
               Resource Type is required.
             </div>
           </div>
-          <div class="form-group col-md-3">
+          <div class="form-group col-md-4">
             <label for="availability">Availability</label>
-            <input type="text" id="availability" formControlName="availability" class="form-control" placeholder="availability">
+            <input type="text" id="availability" formControlName="availability" class="form-control" placeholder="Availability">
             <div *ngIf="itemForm.get('availability')?.invalid && itemForm.get('availability')?.touched" class="text-danger">
               Availability is required.
             </div>
           </div>
-          <div class="form-group col-md-1 d-flex align-items-end">
+        </div>
+        <div class="form-row mt-3">
+          <div class="col-md-12 d-flex justify-content-center">
             <button type="submit" class="btn btn-primary" [disabled]="itemForm.invalid">Add Resource</button>
           </div>
         </div>

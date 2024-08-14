@@ -33,7 +33,8 @@ export class RegisterForEventComponent implements OnInit {
   initForm() {
     this.formModel = this.formBuilder.group({
       eventId: ['', Validators.required],
-      studentId: ['', Validators.required]
+      studentId: ['', Validators.required],
+      status: ['registered'] 
     });
   }
 

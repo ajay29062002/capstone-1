@@ -22,9 +22,18 @@
 
     <div class="form-group">
       <label for="password">Password</label>
-      <input type="password" id="password" formControlName="password" class="form-control" placeholder="••••••">
-      <div *ngIf="itemForm.get('password')?.touched && itemForm.get('password')?.invalid" class="error-message">
+      <input type="password" id="password" formControlName="password" class="form-control" placeholder="Enter password">
+      <!-- <div *ngIf="itemForm.controls['password']?.touched " class="error-message">
         Password is required.
+      </div>
+      <div *ngIf="itemForm.controls['password'].invalid && itemForm.controls['password'].touched" class="error-message">
+        Password must be in required format.
+      </div> -->
+      <div *ngIf="itemForm.get('password')?.touched && itemForm.get('password')?.invalid" class="error-message">
+        <div *ngIf="itemForm.get('password')?.errors?.['required']">Password is required.</div>
+        <div *ngIf="itemForm.controls['password'].invalid && itemForm.controls['password'].touched">Password must be in this format : atleast 1 uppercase, atleast 1 lowercase , atleast 1 special character, minimum 8 characters.</div>
+
+       
       </div>
     </div>
 

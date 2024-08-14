@@ -10,14 +10,14 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./booking-details.component.scss']
 })
 export class BookingDetailsComponent implements OnInit {
-  formModel: any;
+  formModel: FormGroup;
   showError: boolean = false;
-  errorMessage: any = null;
+  errorMessage: string | null = null;
   eventObj: any = null;
   assignModel: any = {};
-  showMessage: any = false;
-  responseMessage: any = null;
-  isUpdate: any = false;
+  showMessage: boolean = false;
+  responseMessage: string | null = null;
+  isUpdate: boolean = false;
   eventList: any = null;
 
   constructor(
@@ -42,30 +42,28 @@ export class BookingDetailsComponent implements OnInit {
       const searchTerm = this.formModel.get('searchTerm')?.value;
       this.httpService.getBookingDetails(searchTerm).subscribe(
         (response) => {
-          this.errorMessage=''
-          alert(response.length===0)
-          if(response.length!==0){
-          console.log(response);
-          this.eventObj = response;
-          this.showMessage = true;
-          this.responseMessage = 'Event found';
-          }
-          else{
-            this.responseMessage=''
-          alert("Not found")
-          this.showError = true;
-          this.errorMessage = 'Failed to find event';
-          console.error('Error searching event:', response);
+          this.errorMessage = '';
+
+          if (response.length !== 0) {
+            console.log(response);
+            this.eventObj = response;
+            this.showMessage = true;
+            this.responseMessage = 'Event found';
+            this.showError = false;
+          } else {
+            this.responseMessage = '';
+            this.showMessage = false;
+            this.showError = true;
+            this.errorMessage = 'Failed to find event';
+            console.error('Error searching event:', response);
           }
           // this.getEvents();
+        },
+        (error) => {
+          this.showError = true;
+          this.errorMessage = 'Failed to find event';
+          console.error('Error searching event:', error);
         }
-        // ,
-        // (error) => {
-        //   alert("Not found")
-        //   this.showError = true;
-        //   this.errorMessage = 'Failed to find event';
-        //   console.error('Error searching event:', error);
-        // }
       );
     } else {
       this.formModel.markAllAsTouched();
@@ -76,7 +74,6 @@ export class BookingDetailsComponent implements OnInit {
     this.httpService.GetAllevents().subscribe(
       (data) => {
         this.eventList = data;
-        alert("Hello");
       },
       (error) => {
         this.showError = true;

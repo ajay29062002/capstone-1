@@ -1,11 +1,16 @@
+
+
 <div class="login-container">
+
+
   <h2>EDUCATIONAL-EVENT-MANAGEMENT-SYSTEM</h2>
   <p>Please enter your user and password!</p>
+
 
   <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
       <label for="username">Username</label>
-      <input type="text" id="username" formControlName="username" class="form-control" placeholder="name@example.com">
+      <input type="text" id="username" formControlName="username" class="form-control" placeholder="Enter username">
       <div *ngIf="itemForm.get('username')?.invalid && itemForm.get('username')?.touched" class="error-message">
         Username is required.
       </div>
@@ -13,7 +18,7 @@
 
     <div class="form-group">
       <label for="password">Password</label>
-      <input type="password" id="password" formControlName="password" class="form-control">
+      <input type="password" id="password" formControlName="password" class="form-control" placeholder="Enter password">
       <div *ngIf="itemForm.get('password')?.invalid && itemForm.get('password')?.touched" class="error-message">
         Password is required.
       </div>
