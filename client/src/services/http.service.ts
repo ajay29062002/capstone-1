@@ -35,6 +35,9 @@ export class HttpService {
   GetAllevents(): Observable<any> {
     return this.http.get(`${this.serverName}/api/institution/events`, { headers: this.getHeaders() });
   }
+  GetAlleventsforstudent(): Observable<any> {
+    return this.http.get(`${this.serverName}/api/student/events`, { headers: this.getHeaders() });
+  }
 
   GetAllResources(): Observable<any> {
     return this.http.get(`${this.serverName}/api/institution/resources`, { headers: this.getHeaders() });

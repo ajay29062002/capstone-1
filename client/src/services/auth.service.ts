@@ -32,6 +32,12 @@ export class AuthService {
   get getId(): string | null {
     return localStorage.getItem('id');
   }
+  SetName(str:any){
+    localStorage.setItem('name',str)
+  }
+  get getName(){
+    return localStorage.getItem('name')
+  }
 
   // Method to retrieve login status
   get getLoginStatus(): boolean {

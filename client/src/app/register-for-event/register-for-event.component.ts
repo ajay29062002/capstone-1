@@ -41,7 +41,7 @@ export class RegisterForEventComponent implements OnInit {
   }
 
   getEvent(): void {
-    this.httpService.GetAllevents().subscribe(
+    this.httpService.GetAlleventsforstudent().subscribe(
       (data) => {
         this.eventList = data;
       },

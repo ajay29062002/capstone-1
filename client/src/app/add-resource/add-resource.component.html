@@ -1,6 +1,6 @@
 <div class="container">
   <h1 class="my-4 text-center">Manage Resource</h1>
-  
+ 
   <div class="card mb-4">
     <div class="card-header">Add Resource</div>
     <div class="card-body">
@@ -8,15 +8,19 @@
         <div class="form-row">
           <div class="form-group col-md-4">
             <label for="description">Description</label>
-            <input type="text" id="description" formControlName="description" class="form-control" placeholder="Description">
-            <div *ngIf="itemForm.get('description')?.invalid && itemForm.get('description')?.touched" class="text-danger">
+            <input type="text" id="description" formControlName="description" class="form-control"
+              placeholder="Description">
+            <div *ngIf="itemForm.get('description')?.invalid && itemForm.get('description')?.touched"
+              class="text-danger">
               Description is required.
             </div>
           </div>
           <div class="form-group col-md-4">
             <label for="resourceType">Resource Type</label>
-            <input type="text" id="resourceType" formControlName="resourceType" class="form-control" placeholder="Resource Type">
-            <div *ngIf="itemForm.get('resourceType')?.invalid && itemForm.get('resourceType')?.touched" class="text-danger">
+            <input type="text" id="resourceType" formControlName="resourceType" class="form-control"
+              placeholder="Resource Type">
+            <div *ngIf="itemForm.get('resourceType')?.invalid && itemForm.get('resourceType')?.touched"
+              class="text-danger">
               Resource Type is required.
             </div>
           </div>
@@ -27,7 +31,8 @@
               <option value="available">Available</option>
               <option value="unavailable">Unavailable</option>
             </select>
-            <div *ngIf="itemForm.get('availability')?.invalid && itemForm.get('availability')?.touched" class="text-danger">
+            <div *ngIf="itemForm.get('availability')?.invalid && itemForm.get('availability')?.touched"
+              class="text-danger">
               Availability is required.
             </div>
           </div>
@@ -40,31 +45,34 @@
       </form>
     </div>
   </div>
-
+ 
   <div class="card mt-4">
     <div class="card-header">Resource Information</div>
     <div class="card-body">
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>Sr#</th>
-            <th>Description</th>
-            <th>Resource Type</th>
-            <th>Availability</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let resource of resourceList;">
-            <td>{{ resource.id }}</td>
-            <td>{{ resource.description }}</td>
-            <td>{{ resource.resourceType }}</td>
-            <td>{{ resource.availability }}</td>
-            <td>
-              <button (click)="onDelete(resource.id)">Delete</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <th>Sr#</th>
+              <th>Description</th>
+              <th>Resource Type</th>
+              <th>Availability</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let resource of resourceList;">
+              <td>{{ resource.id }}</td>
+              <td class="text-break">{{ resource.description }}</td>
+              <td class="text-break">{{ resource.resourceType }}</td>
+              <td>{{ resource.availability }}</td>
+              <td>
+                <button class="btn btn-danger btn-sm" (click)="onDelete(resource.id)">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>

@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 
+import { Observable } from 'rxjs';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -10,10 +12,17 @@ import { Router } from '@angular/router';
 export class AppComponent {
   IsLoggin: any = false;
   roleName: string | null;
-  constructor(private authService: AuthService, private router: Router) {
+  user:any|null;
+  
+ 
+  constructor(private authService: AuthService, private router: Router ) {
     debugger;
     this.IsLoggin = authService.getLoginStatus;
     this.roleName = authService.getRole;
+    this.user=authService.getName;
+   
+
+    
     if (this.IsLoggin == false) {
       this.router.navigateByUrl('/login');
 

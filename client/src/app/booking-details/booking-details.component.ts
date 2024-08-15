@@ -34,7 +34,7 @@ export class BookingDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     // Initialization logic
-    // this.getEvents();
+    this.getEvents();
   }
 
   searchEvent(): void {

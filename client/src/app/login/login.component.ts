@@ -45,6 +45,7 @@ export class LoginComponent implements OnInit {
           this.authService.SetId(data.id);
           // localStorage.setItem('role', data.role);
           this.authService.SetRole(data.role);
+          this.authService.SetName(data.username);
          // this.authService.getUserId();
          // data.stateIdMd;
           this.authService.saveToken(data.token)

@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpService } from '../../services/http.service';
 import { AuthService } from '../../services/auth.service';
-
+ 
 @Component({
   selector: 'app-add-resource',
   templateUrl: './add-resource.component.html',
@@ -18,7 +18,7 @@ export class AddResourceComponent implements OnInit {
   assignModel: any = {};
   showMessage: any;
   responseMessage: any;
-
+ 
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -31,14 +31,14 @@ export class AddResourceComponent implements OnInit {
       description: ['', [Validators.required]],
       resourceType: ['', [Validators.required]],
       availability: ['', [Validators.required]]
-      
+     
     });
   }
-
+ 
   ngOnInit(): void {
     this.getResources();
   }
-
+ 
   onSubmit(): void {
     if (this.itemForm.valid) {
       // Handle form submission

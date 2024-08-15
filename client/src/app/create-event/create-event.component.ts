@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpService } from '../../services/http.service';
 import { AuthService } from '../../services/auth.service';
-
+ 
 @Component({
   selector: 'app-create-event',
   templateUrl: './create-event.component.html',
@@ -18,7 +18,7 @@ export class CreateEventComponent implements OnInit {
   assignModel: any = {};
   showMessage: any;
   responseMessage: any;
-
+ 
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -28,15 +28,26 @@ export class CreateEventComponent implements OnInit {
     this.itemForm = this.formBuilder.group({
       name: ['', [Validators.required]],
       description: ['', [Validators.required]],
-      materials: ['', [Validators.required]]
+      materials: ['', [Validators.required]],
+      
+      // date:['',[Validators.required , this.dateValidator]]
+      
       // Add more form controls as needed
     });
   }
-
+ 
   ngOnInit(): void {
     this.getEvent();
   }
-
+ 
+  // dateValidator(control: AbstractControl): ValidationErrors | null {
+  //     const datePattern = /^\d{4}-\d{2}-\d{2}$/;
+  //     if (!datePattern.test(control.value)) {
+  //       return { invalidDate: true };
+  //     }
+  //     return null;
+    
+  // }
   getEvent(): void {
     this.httpService.GetAllevents().subscribe(
       (data) => {
@@ -49,7 +60,7 @@ export class CreateEventComponent implements OnInit {
       }
     );
   }
-
+ 
   onSubmit(): void {
     if (this.itemForm.valid) {
       this.httpService.createEvent(this.itemForm.value).subscribe(
@@ -69,16 +80,16 @@ export class CreateEventComponent implements OnInit {
       this.itemForm.markAllAsTouched();
     }
   }
-
-
-
+ 
+ 
+ 
   onDelete(eventId: any): void {
   //  alert(eventId);
     this.httpService.deleteEvent(eventId).subscribe(()=>{
       this.getEvent();
           });
    
-    
-  
+   
+ 
   }
 }
