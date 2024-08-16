@@ -1,7 +1,9 @@
-<div class="container">
+<div class="title" >
   <h1 class="my-4 text-center">Manage Event</h1>
+  </div>
+
  
-  <div class="card mb-4">
+  <div class="container">
     <div class="card-header">Create Event</div>
     <div class="card-body">
       <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
@@ -50,7 +52,7 @@
     </div>
   </div>
  
-  <div class="card mt-4">
+  <div class="container1">
     <div class="card-header">Event Information</div>
     <div class="card-body">
       <div class="table-responsive">
@@ -66,7 +68,7 @@
               <th>Action</th>
             </tr>
             <tr>
-              <th colspan="4"></th>
+              <th colspan="5"></th>
               <th>Type</th>
               <th>Description</th>
               <th></th>
@@ -98,4 +100,3 @@
       </div>
     </div>
   </div>
-</div>

@@ -19,6 +19,7 @@ export class RegisterForEventComponent implements OnInit {
   responseMessage: any;
   isUpdate: any;
   eventList: any;
+  // eventRegistration: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -56,11 +57,17 @@ export class RegisterForEventComponent implements OnInit {
   submit() {
     if (this.formModel.valid) {
       const eventId = this.formModel.get('eventId').value;
-      const studentId = this.formModel.get('studentId').value;
+      // const studentId = this.formModel.get('studentId').value;
+      const eventRegistration = {studentId:this.formModel.get('studentId').value,status:"registered"}
+      
+      // console.log("Form Value is "+this.formModel.get('eventId1').value);
+      // console.log("AfterAssign "+ eventId);
+
+      // console.log("Form Value for Student Idis "+this.formModel.get('studentId').value);
+      // console.log("AfterAssign Student Id "+ studentId);
 
 
-
-      this.httpService.registerForEvent(eventId, studentId).subscribe(
+      this.httpService.registerForEvent(eventId, eventRegistration).subscribe(
         (response) => {
           this.showError = false
           this.showMessage = true;

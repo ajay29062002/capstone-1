@@ -76,7 +76,7 @@ export class BookingDetailsComponent implements OnInit {
         this.eventList = data;
       },
       (error) => {
-        this.showError = true;
+        this.showError = false;
         this.errorMessage = 'Failed to fetch events';
         console.error('Error fetching events:', error);
       }

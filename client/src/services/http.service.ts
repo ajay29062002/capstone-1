@@ -25,6 +25,8 @@ export class HttpService {
   }
 
   registerForEvent(eventId: any, details: any): Observable<any> {
+    console.log("Event Id  ",eventId);
+    console.log("url",`${this.serverName}/api/student/register/${eventId}`,details);
     return this.http.post(`${this.serverName}/api/student/register/${eventId}`, details, { headers: this.getHeaders() });
   }
 
