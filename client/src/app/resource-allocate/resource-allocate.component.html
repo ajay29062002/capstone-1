@@ -30,7 +30,7 @@
         </button>
         <div class="dropdown-menu" [class.show]="showResourceDropdown">
           <div class="dropdown-item" *ngFor="let resource of resourceList" (click)="selectResource(resource)">
-            {{ resource.id }} - {{resource.resourceType}}
+           {{resource.resourceType}}
           </div>
         </div>
       </div>

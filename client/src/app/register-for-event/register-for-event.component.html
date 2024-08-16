@@ -7,7 +7,7 @@
       <select id="eventId" formControlName="eventId" class="form-control">
         <option value="">Choose an event</option>
         <option *ngFor="let event of eventList" [value]="eventList.id">
-          {{ event.id }} - {{event.name}}
+          {{event.name}}
         </option>
       </select>
     </div>

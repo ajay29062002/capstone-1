@@ -1,64 +1,56 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light px-3 shadow-sm">
-    <a class="navbar-brand fw-bold text-primary" href="dashboard">Educational Event Management</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav me-auto">
-            <li *ngIf="IsLoggin" class="nav-item nav-link text-dark fw-semibold">
-                Welcome {{user}}
-            </li>
-            <li class="nav-item" *ngIf="roleName === 'INSTITUTION'">
-                <a class="nav-link text-secondary hover-effect" [routerLink]="['/create-event']">Create Event</a>
-            </li>
-            <li class="nav-item" *ngIf="roleName === 'INSTITUTION'">
-                <a class="nav-link text-secondary hover-effect" [routerLink]="['/add-resource']">Add Resource</a>
-            </li>
-            <li class="nav-item" *ngIf="roleName === 'INSTITUTION'">
-                <a class="nav-link text-secondary hover-effect" [routerLink]="['/resource-allocate']">Resource Allocate</a>
-            </li>
-            <li class="nav-item" *ngIf="roleName === 'EDUCATOR'">
-                <a class="nav-link text-secondary hover-effect" [routerLink]="['/view-events']">View Events</a>
-            </li>
-            <li class="nav-item" *ngIf="roleName === 'STUDENT'">
-                <a class="nav-link text-secondary hover-effect" [routerLink]="['/register-for-event']">Register for events</a>
-            </li>
-            <li class="nav-item" *ngIf="roleName === 'STUDENT'">
-                <a class="nav-link text-secondary hover-effect" [routerLink]="['/booking-details']">View Booking Status</a>
-            </li>
-        </ul>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Educational Event Management</title>
+   
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light px-3 shadow-sm">
+        <a class="navbar-brand fw-bold text-primary" href="dashboard">Educational Event Management</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li *ngIf="IsLoggin" class="nav-item nav-link text-dark fw-semibold">
+                  <marquee>  welcome {{user}}</marquee>
+                </li>
+                <li class="nav-item" *ngIf="roleName === 'INSTITUTION'">
+                    <a class="nav-link text-secondary hover-effect" [routerLink]="['/create-event']">Create Event</a>
+                </li>
+                <li class="nav-item" *ngIf="roleName === 'INSTITUTION'">
+                    <a class="nav-link text-secondary hover-effect" [routerLink]="['/add-resource']">Add Resource</a>
+                </li>
+                <li class="nav-item" *ngIf="roleName === 'INSTITUTION'">
+                    <a class="nav-link text-secondary hover-effect" [routerLink]="['/resource-allocate']">Resource Allocate</a>
+                </li>
+                <li class="nav-item" *ngIf="roleName === 'EDUCATOR'">
+                    <a class="nav-link text-secondary hover-effect" [routerLink]="['/view-events']">View Events</a>
+                </li>
+                <li class="nav-item" *ngIf="roleName === 'STUDENT'">
+                    <a class="nav-link text-secondary hover-effect" [routerLink]="['/register-for-event']">Register for events</a>
+                </li>
+                <li class="nav-item" *ngIf="roleName === 'STUDENT'">
+                    <a class="nav-link text-secondary hover-effect" [routerLink]="['/booking-details']">View Booking Status</a>
+                </li>
+            </ul>
 
-        <!-- Login/Logout buttons -->
-        <ul class="navbar-nav ms-auto">
-            <li *ngIf="!IsLoggin" class="nav-item">
-                <a class="nav-link btn btn-outline-primary btn-sm px-3 me-2" [routerLink]="['/login']">Login</a>
-            </li>
-            <li *ngIf="IsLoggin" class="nav-item">
-                <a class="nav-link btn btn-outline-danger btn-sm px-3" (click)="logout()" [routerLink]="['/login']">Logout</a>
-            </li>
-        </ul>
-    </div>
-</nav>
+            <!-- Login/Logout buttons -->
+            <ul class="navbar-nav ms-auto">
+                <li *ngIf="!IsLoggin" class="nav-item">
+                    <a class="btn btn-outline-primary btn-sm px-3 me-2 custom-btn" [routerLink]="['/login']">Login</a>
+                </li>
+                <li *ngIf="IsLoggin" class="nav-item">
+                    <a class="btn btn-outline-danger btn-sm px-3 custom-btn" (click)="logout()" [routerLink]="['/login']">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
-<body class="bg-light">
     <div class="container mt-4 mx-auto p-4 bg-white rounded shadow">
         <router-outlet></router-outlet>
     </div>
 </body>
-
-<style>
-    .hover-effect:hover {
-        color: #007bff !important;
-        transition: color 0.3s ease;
-    }
-    .navbar {
-        border-bottom: 1px solid #bfd4e8;
-    }
-    .navbar-brand {
-        font-size: 1.5rem;
-        color: black !important;
-    }
-    .nav-link {
-        font-size: 0.95rem;
-    }
-</style>
+</html>
