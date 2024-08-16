@@ -32,6 +32,7 @@ public class EventService {
         existingEvent.setName(updateEvent.getName());
         existingEvent.setDescription(updateEvent.getDescription());
         existingEvent.setMaterials(updateEvent.getMaterials());
+        existingEvent.setDate(updateEvent.getDate());
         return eventRepository.save(existingEvent);
     }
 

@@ -18,19 +18,24 @@ export class CreateEventComponent implements OnInit {
   assignModel: any = {};
   showMessage: any;
   responseMessage: any;
+  minDate: any;
  
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
     private httpService: HttpService,
-    private authService: AuthService
+    private authService: AuthService,
+   
   ) {
+    this.minDate = this.getTodayDate();
+
+
     this.itemForm = this.formBuilder.group({
       name: ['', [Validators.required]],
       description: ['', [Validators.required]],
-      materials: ['', [Validators.required]]
+      materials: ['', [Validators.required]],
       
-      // date:['',[Validators.required , this.dateValidator]]
+      date:['',[Validators.required , this.dateValidator]]
       
       // Add more form controls as needed
     });
@@ -40,14 +45,14 @@ export class CreateEventComponent implements OnInit {
     this.getEvent();
   }
  
-  // dateValidator(control: AbstractControl): ValidationErrors | null {
-  //     const datePattern = /^\d{4}-\d{2}-\d{2}$/;
-  //     if (!datePattern.test(control.value)) {
-  //       return { invalidDate: true };
-  //     }
-  //     return null;
+  dateValidator(control: AbstractControl): ValidationErrors | null {
+      const datePattern = /^\d{4}-\d{2}-\d{2}$/;
+      if (!datePattern.test(control.value)) {
+        return { invalidDate: true };
+      }
+      return null;
     
-  // }
+  }
   getEvent(): void {
     this.httpService.GetAllevents().subscribe(
       (data) => {
@@ -91,5 +96,19 @@ export class CreateEventComponent implements OnInit {
    
    
  
+  }
+
+  setMinDate() {
+    const today = new Date();
+    today.setMinutes(today.getMinutes() - today.getTimezoneOffset());
+    this.minDate = today.toISOString().slice(0, 16);
+  }
+
+  private getTodayDate(): string {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = (today.getMonth() + 1).toString().padStart(2, '0');
+    const day = today.getDate().toString().padStart(2, '0');
+    return `${year}-${month}-${day}`;
   }
 }

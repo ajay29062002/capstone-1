@@ -2,6 +2,8 @@ package com.wecp.educationalresourcedistributionsystem.entity;
 
 
 import javax.persistence.*;
+
+// import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -14,6 +16,7 @@ public class Event {
     private String description;
 
     private String materials;
+    private String date;
 
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
     private List<Resource> resourceAllocations;
@@ -57,4 +60,14 @@ public class Event {
     public void setMaterials(String materials) {
         this.materials = materials;
     }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    
 }

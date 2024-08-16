@@ -57,6 +57,7 @@
                         <th>Name</th>
                         <th>Description</th>
                         <th>Material</th>
+                        <th>Date</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -66,6 +67,7 @@
                         <td>{{ event.name }}</td>
                         <td>{{ event.description }}</td>
                         <td>{{ event.materials }}</td>
+                        <td>{{ event.date }}</td>
                         <!-- <td><button class="update-btn" (click)="edit(event)">Update</button></td> -->
                         <td>
                             <button data-bs-toggle="modal" (click)="edit(event)" data-bs-target="#exampleModalCenter"
