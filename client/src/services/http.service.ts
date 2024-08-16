@@ -11,7 +11,7 @@ import { TitleStrategy } from '@angular/router';
 export class HttpService {
   public serverName = environment.apiUrl;
 
-  constructor(private http: HttpClient, private authService: AuthService) {}
+  constructor(private http: HttpClient, private authService: AuthService) { }
 
   private getHeaders(): HttpHeaders {
     return new HttpHeaders({
@@ -25,8 +25,6 @@ export class HttpService {
   }
 
   registerForEvent(eventId: any, details: any): Observable<any> {
-    console.log("Event Id  ",eventId);
-    console.log("url",`${this.serverName}/api/student/register/${eventId}`,details);
     return this.http.post(`${this.serverName}/api/student/register/${eventId}`, details, { headers: this.getHeaders() });
   }
 
@@ -37,12 +35,21 @@ export class HttpService {
   GetAllevents(): Observable<any> {
     return this.http.get(`${this.serverName}/api/institution/events`, { headers: this.getHeaders() });
   }
+
+  getAllEventsSortedByName(ascending: boolean): Observable<any[]> {
+    return this.http.get<any[]>(`${this.serverName}/api/institution/events/sorted?ascending=${ascending}`, { headers: this.getHeaders() });
+  }
+
   GetAlleventsforstudent(): Observable<any> {
     return this.http.get(`${this.serverName}/api/student/events`, { headers: this.getHeaders() });
   }
 
   GetAllResources(): Observable<any> {
     return this.http.get(`${this.serverName}/api/institution/resources`, { headers: this.getHeaders() });
+  }
+
+  getAllResourcesSortedByDescription(ascending: boolean): Observable<any[]> {
+    return this.http.get<any[]>(`${this.serverName}/api/institution/resources/sorted?ascending=${ascending}`, { headers: this.getHeaders() });
   }
 
   createEvent(details: any): Observable<any> {
@@ -69,7 +76,7 @@ export class HttpService {
     return this.http.post(`${this.serverName}/api/user/register`, details, { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) });
   }
 
-  deleteEvent(eventId:any){
+  deleteEvent(eventId: any) {
     return this.http.delete(`${this.serverName}/api/institution/events/${eventId}`, { headers: this.getHeaders() });
 
   }
@@ -78,12 +85,12 @@ export class HttpService {
     return this.http.get(`${this.serverName}/api/user/users`, { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) });
   }
 
-  deleteResource(resourceId:any){
+  deleteResource(resourceId: any) {
     return this.http.delete(`${this.serverName}/api/institution/resources/${resourceId}`, { headers: this.getHeaders() });
 
   }
-  
 
-  
+
+
 
 }

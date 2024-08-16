@@ -19,6 +19,7 @@ export class RegisterForEventComponent implements OnInit {
   responseMessage: any;
   isUpdate: any;
   eventList: any;
+  id:any;
   // eventRegistration: any;
 
   constructor(
@@ -26,7 +27,9 @@ export class RegisterForEventComponent implements OnInit {
     private router: Router,
     private httpService: HttpService,
     private authService: AuthService
-  ) { }
+  ) { 
+    this.id=authService.getId;
+  }
 
   ngOnInit() {
     this.initForm();

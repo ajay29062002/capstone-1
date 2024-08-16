@@ -1,7 +1,6 @@
-
 <div class="container-fluid resource-allocate-container">
   <h2 class="my-4">Allocate Resource to Event</h2>
- 
+
   <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
       <label for="eventId">Select Event</label>
@@ -11,7 +10,8 @@
           'Choose an event' }}
         </button>
         <div class="dropdown-menu" [class.show]="showEventDropdown">
-          <div class="dropdown-item" *ngFor="let event of eventList" (click)="selectEvent(event)">
+          <input type="text" class="form-control mb-2" placeholder="Search events" (input)="searchEvents($event)">
+          <div class="dropdown-item" *ngFor="let event of filteredEventList" (click)="selectEvent(event)">
             {{ event.name }}
           </div>
         </div>
@@ -20,7 +20,7 @@
         Event selection is required.
       </div>
     </div>
- 
+
     <div class="form-group mt-3">
       <label for="resourceId">Select Resource</label>
       <div class="custom-dropdown">
@@ -29,8 +29,9 @@
           resource') : 'Choose a resource' }}
         </button>
         <div class="dropdown-menu" [class.show]="showResourceDropdown">
-          <div class="dropdown-item" *ngFor="let resource of resourceList" (click)="selectResource(resource)">
-           {{resource.resourceType}}
+          <input type="text" class="form-control mb-2" placeholder="Search resources" (input)="searchResources($event)">
+          <div class="dropdown-item" *ngFor="let resource of filteredResourceList" (click)="selectResource(resource)">
+            {{resource.resourceType}}
           </div>
         </div>
       </div>
@@ -38,18 +39,15 @@
         Resource selection is required.
       </div>
     </div>
- 
+
     <button type="submit" [disabled]="!itemForm.valid" class="btn btn-primary mt-3">Allocate Resource</button>
   </form>
- 
+
   <div *ngIf="showMessage" class="alert alert-success mt-3">
     {{ responseMessage }}
   </div>
- 
+
   <div *ngIf="showError" class="alert alert-danger mt-3">
     {{ errorMessage }}
   </div>
 </div>
- 
-
- 

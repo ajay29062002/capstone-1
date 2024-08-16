@@ -1,6 +1,5 @@
 package com.wecp.educationalresourcedistributionsystem.controller;
 
-
 import com.wecp.educationalresourcedistributionsystem.entity.Event;
 import com.wecp.educationalresourcedistributionsystem.entity.Resource;
 import com.wecp.educationalresourcedistributionsystem.service.EventService;
@@ -32,6 +31,13 @@ public class InstitutionController {
         return new ResponseEntity<>(events, HttpStatus.OK);
     }
 
+    @GetMapping("/api/institution/events/sorted")
+    public ResponseEntity<List<Event>> getAllEventsSortedByName(
+            @RequestParam(defaultValue = "true") boolean ascending) {
+        List<Event> events = eventService.getAllEventsSortedByName(ascending);
+        return new ResponseEntity<>(events, HttpStatus.OK);
+    }
+
     @PostMapping("/api/institution/resource")
     public ResponseEntity<Resource> createResource(@RequestBody Resource resource) {
         Resource createdResource = resourceService.createResource(resource);
@@ -44,25 +50,30 @@ public class InstitutionController {
         return new ResponseEntity<>(resources, HttpStatus.OK);
     }
 
+    @GetMapping("/api/institution/resources/sorted")
+    public ResponseEntity<List<Resource>> getAllResourcesSortedByDescription(
+            @RequestParam(defaultValue = "true") boolean ascending) {
+        List<Resource> resources = resourceService.getAllResourcesSortedByDescription(ascending);
+        return new ResponseEntity<>(resources, HttpStatus.OK);
+    }
+
     @PostMapping("/api/institution/event/allocate-resources")
     public ResponseEntity<Event> allocateResource(@RequestParam("eventId") Long eventId,
-                                                     @RequestParam("resourceId") Long resourceId) {
+            @RequestParam("resourceId") Long resourceId) {
         Event event = eventService.allocateResourceToEvent(eventId, resourceId);
         return new ResponseEntity<>(event, HttpStatus.OK);
     }
 
     @DeleteMapping("/api/institution/events/{eventId}")
-    public ResponseEntity<Void> deleteEvent(@PathVariable Long eventId){
+    public ResponseEntity<Void> deleteEvent(@PathVariable Long eventId) {
         eventService.deleteEvent(eventId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/api/institution/resources/{resourceId}")
-    public ResponseEntity<Void> deleteResource(@PathVariable Long resourceId){
+    public ResponseEntity<Void> deleteResource(@PathVariable Long resourceId) {
         resourceService.deleteResource(resourceId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
-    
 
 }

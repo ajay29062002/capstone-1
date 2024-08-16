@@ -5,6 +5,7 @@ import com.wecp.educationalresourcedistributionsystem.entity.Resource;
 import com.wecp.educationalresourcedistributionsystem.repository.EventRepository;
 import com.wecp.educationalresourcedistributionsystem.repository.ResourceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -27,6 +28,11 @@ public class EventService {
         return eventRepository.findAll();
     }
 
+    public List<Event> getAllEventsSortedByName(boolean ascending) {
+        Sort sort = Sort.by(ascending ? Sort.Direction.ASC : Sort.Direction.DESC, "name");
+        return eventRepository.findAll(sort);
+    }
+
     public Event updateEvent(Long EventId, Event updateEvent) {
         Event existingEvent = eventRepository.findById(EventId).orElseThrow(EntityNotFoundException::new);
         existingEvent.setName(updateEvent.getName());
@@ -36,24 +42,13 @@ public class EventService {
         return eventRepository.save(existingEvent);
     }
 
-    // public Event allocateResourceToEvent(Long eventId, Long resourceId) {
-    // Event event = eventRepository.findById(eventId).orElseThrow(() -> new
-    // EntityNotFoundException("Event not found"));
-    // Resource resource = resourceRepository.findById(resourceId).orElseThrow(() ->
-    // new EntityNotFoundException("Resource not found"));
-    // event.getResourceAllocations().add(resource);
-    // return eventRepository.save(event);
-    // }
     public Event allocateResourceToEvent(Long eventId, Long resourceId) {
         Event event = eventRepository.findById(eventId)
                 .orElseThrow(() -> new EntityNotFoundException("Event not found"));
         Resource resource = resourceRepository.findById(resourceId)
                 .orElseThrow(() -> new EntityNotFoundException("Resource not found"));
-        // Update both sides of the relationship
         event.getResourceAllocations().add(resource);
         resource.setEvent(event);
-        // Save both entities
-        // resourceRepository.save(resource);
         return eventRepository.save(event);
     }
 
