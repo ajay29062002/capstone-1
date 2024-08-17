@@ -1,50 +1,105 @@
-
-
-    <nav class="navbar navbar-expand-lg navbar-light bg-light px-3 shadow-sm">
-        
-        <a class="navbar-brand fw-bold text-primary" href="dashboard">Educational Event Management</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav me-auto">
-                <li *ngIf="IsLoggin" class="nav-item nav-link text-dark fw-semibold">
-                  <marquee>  welcome {{user}} </marquee>
-                </li>
-                <li class="nav-item" *ngIf="roleName === 'INSTITUTION'">
-                    <a class="nav-link text-secondary hover-effect" [routerLink]="['/create-event']">Manage Events</a>
-                </li>
-                <li class="nav-item" *ngIf="roleName === 'INSTITUTION'">
-                    <a class="nav-link text-secondary hover-effect" [routerLink]="['/add-resource']">Add Resource</a>
-                </li>
-                <li class="nav-item" *ngIf="roleName === 'INSTITUTION'">
-                    <a class="nav-link text-secondary hover-effect" [routerLink]="['/resource-allocate']">Resource Allocate</a>
-                </li>
-                <li class="nav-item" *ngIf="roleName === 'EDUCATOR'">
-                    <a class="nav-link text-secondary hover-effect" [routerLink]="['/view-events']">View Events</a>
-                </li>
-                <li class="nav-item" *ngIf="roleName === 'STUDENT'">
-                    <a class="nav-link text-secondary hover-effect" [routerLink]="['/register-for-event']">Register for events</a>
-                   
-                </li>
-                <li class="nav-item" *ngIf="roleName === 'STUDENT'">
-                    <a class="nav-link text-secondary hover-effect" [routerLink]="['/booking-details']">View Booking Status</a>
-                </li>
-            </ul>
-
-            <!-- Login/Logout buttons -->
-            <ul class="navbar-nav ms-auto">
-                <li *ngIf="!IsLoggin" class="nav-item">
-                    <a class="btn btn-outline-primary btn-sm px-3 me-2 custom-btn" [routerLink]="['/login']">Login</a>
-                </li>
-                <li *ngIf="IsLoggin" class="nav-item">
-                    <a class="btn btn-outline-danger btn-sm px-3 custom-btn" (click)="logout()" [routerLink]="['/login']">Logout</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-<body>
-    <div class="container mt-4 mx-5 ">
+<nav class="navbar navbar-expand-lg navbar-light bg-light px-3 shadow-sm">
+    <img src="../assets/logo.png" alt="Logo">
+    <a class="navbar-brand fw-bold text-primary" href="dashboard">Grow</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+            <li *ngIf="IsLoggin" class="nav-item nav-link text-dark fw-semibold">
+                <marquee> welcome {{user}} </marquee>
+            </li>
+            <li class="nav-item" *ngIf="roleName === 'INSTITUTION'">
+                <a class="nav-link text-secondary hover-effect" [routerLink]="['/create-event']">Manage Events</a>
+            </li>
+            <li class="nav-item" *ngIf="roleName === 'INSTITUTION'">
+                <a class="nav-link text-secondary hover-effect" [routerLink]="['/add-resource']">Add Resource</a>
+            </li>
+            <li class="nav-item" *ngIf="roleName === 'INSTITUTION'">
+                <a class="nav-link text-secondary hover-effect" [routerLink]="['/resource-allocate']">Resource
+                    Allocate</a>
+            </li>
+            <li class="nav-item" *ngIf="roleName === 'EDUCATOR'">
+                <a class="nav-link text-secondary hover-effect" [routerLink]="['/view-events']">View Events</a>
+            </li>
+            <li class="nav-item" *ngIf="roleName === 'STUDENT'">
+                <a class="nav-link text-secondary hover-effect" [routerLink]="['/register-for-event']">Register for
+                    events</a>
+            </li>
+            <li class="nav-item" *ngIf="roleName === 'STUDENT'">
+                <a class="nav-link text-secondary hover-effect" [routerLink]="['/booking-details']">View Booking
+                    Status</a>
+            </li>
+        </ul>
+ 
+        <!-- Login/Logout buttons -->
+        <ul class="navbar-nav ms-auto">
+            <li *ngIf="!IsLoggin" class="nav-item">
+                <a class="btn btn-outline-primary btn-sm px-3 me-2 custom-btn" [routerLink]="['/login']">Login</a>
+            </li>
+            <li *ngIf="IsLoggin" class="nav-item">
+                <a class="btn btn-outline-danger btn-sm px-3 custom-btn" (click)="logout()"
+                    [routerLink]="['/login']">Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+ 
+ 
+    <div class="container-body">
         <router-outlet></router-outlet>
     </div>
-</body>
+ 
+ 
+ 
+<footer class="text-center text-lg-start" id="footer-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-10 mb-4 mb-md-0">
+                <h5 class="text-uppercase">Footer Content</h5>
+                <p>
+                    Here you can use rows and columns to organize your footer content.
+                </p>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                <h5 class="text-uppercase">Links</h5>
+                <ul class="list-unstyled mb-0">
+                    <li>
+                        <a href="#!" class="text-dark">Link 1</a>
+                    </li>
+                    <li>
+                        <a href="#!" class="text-dark">Link 2</a>
+                    </li>
+                    <li>
+                        <a href="#!" class="text-dark">Link 3</a>
+                    </li>
+                    <li>
+                        <a href="#!" class="text-dark">Link 4</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                <h5 class="text-uppercase mb-0">Links</h5>
+                <ul class="list-unstyled">
+                    <li>
+                        <a href="#!" class="text-dark">Link 1</a>
+                    </li>
+                    <li>
+                        <a href="#!" class="text-dark">Link 2</a>
+                    </li>
+                    <li>
+                        <a href="#!" class="text-dark">Link 3</a>
+                    </li>
+                    <li>
+                        <a href="#!" class="text-dark">Link 4</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="text-center p-3 bg-dark text-white" id="copyright">
+        © 2024 Copyright:
+        <a class="text-white" href="https://yourwebsite.com/">yourwebsite.com</a>
+    </div>
+</footer>
