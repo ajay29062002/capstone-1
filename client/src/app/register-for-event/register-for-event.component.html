@@ -1,25 +1,24 @@
 <div class="container">
-  <h2>Registration for event</h2>{{id}}
+  <h2>Events Registration</h2>
 
-  <form [formGroup]="formModel" (ngSubmit)="submit()">
-    <div class="form-group">
-      <label for="eventId">Event ID</label>
-      <select id="eventId" formControlName="eventId" class="form-control">
-        <option value="">Choose an event</option>
-        <option *ngFor="let event of eventList" [value]="event.id">
-          {{event.name}}
-        </option>
-      </select>
-    </div>
-
-    <div class="form-group">
-      <label for="studentId">Student ID</label>
-      <input type="text" id="studentId" formControlName="studentId" class="form-control">
-
-    </div>
-
-    <button type="submit" class="btn btn-primary">Register</button>
-  </form>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Event Name</th>
+        <th>Description</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let event of eventList">
+        <td>{{ event.name }}</td>
+        <td>{{ event.description }}</td>
+        <td>
+          <button class="btn btn-primary" (click)="registerForEvent(event.id)">Register</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
   <div *ngIf="showError" class="alert alert-danger mt-3">
     {{ errorMessage }}

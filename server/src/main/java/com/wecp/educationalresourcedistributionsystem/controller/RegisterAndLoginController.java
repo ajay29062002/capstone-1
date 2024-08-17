@@ -45,7 +45,7 @@ public class RegisterAndLoginController {
 
             String tokens= jwtutil.generateToken(loginRequest.getUsername());
             
-            LoginResponse response = new LoginResponse(tokens, user.getUsername(), user.getEmail(), user.getRole());
+            LoginResponse response = new LoginResponse(tokens, user.getUsername(), user.getEmail(), user.getRole(), user.getId());
             return ResponseEntity.ok(response);
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();

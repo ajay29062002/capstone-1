@@ -17,9 +17,10 @@ export class RegistrationComponent implements OnInit {
   itemForm: FormGroup;
   formModel: any = { role: null, email: '', password: '', username: '' };
   showMessage: boolean = false;
+  id: any |null;
 
   responseMessage: any;
-  constructor(public router: Router, private httpService: HttpService, private formBuilder: FormBuilder) {
+  constructor(public router: Router, private httpService: HttpService, private formBuilder: FormBuilder,private authService:AuthService) {
 
     this.itemForm = this.formBuilder.group({
       email: [this.formModel.email, [Validators.required, Validators.email]],
@@ -64,9 +65,9 @@ export class RegistrationComponent implements OnInit {
 
   onRegister(): void {
     if (this.itemForm.valid) {
+      // alert(localStorage.getItem('id').);
       const usernameControl = this.itemForm.get('username');
       const usernameValue = usernameControl?.value;
-
       const uniqueUsernameError = this.uniqueUsernameValidator(usernameValue);
 
       if (uniqueUsernameError) {

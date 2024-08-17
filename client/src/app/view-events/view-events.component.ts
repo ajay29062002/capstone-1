@@ -20,6 +20,7 @@ export class ViewEventsComponent implements OnInit {
   responseMessage: any;
   isUpdate: any = false;
   eventList: any[] = [];
+  minDate: string;
   
 
   constructor(
@@ -27,7 +28,9 @@ export class ViewEventsComponent implements OnInit {
     private router: Router,
     private httpService: HttpService,
     private authService: AuthService
-  ) { }
+  ) {
+    this.minDate = this.getTodayDate();
+   }
 
   ngOnInit(): void {
     this.initForm();
@@ -38,7 +41,8 @@ export class ViewEventsComponent implements OnInit {
     this.itemForm = this.formBuilder.group({
       name: ['', Validators.required],
       description: ['', Validators.required],
-      materials: ['', Validators.required]
+      materials: ['', Validators.required],
+      date:['']
     });
   }
 
@@ -105,5 +109,13 @@ export class ViewEventsComponent implements OnInit {
     this.isUpdate = false;
     this.eventObj = null;
     this.itemForm.reset();
+  }
+
+  private getTodayDate(): string {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = (today.getMonth() + 1).toString().padStart(2, '0');
+    const day = today.getDate().toString().padStart(2, '0');
+    return `${year}-${month}-${day}`;
   }
 }

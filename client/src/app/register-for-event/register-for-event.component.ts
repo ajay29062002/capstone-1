@@ -10,41 +10,26 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./register-for-event.component.scss']
 })
 export class RegisterForEventComponent implements OnInit {
-  formModel: any;
+  eventList: any[] = [];
   showError: boolean = false;
-  errorMessage: any;
-  eventObj: any;
-  assignModel: any;
-  showMessage: any;
-  responseMessage: any;
-  isUpdate: any;
-  eventList: any;
-  id:any;
-  // eventRegistration: any;
+  errorMessage: string = '';
+  showMessage: boolean = false;
+  responseMessage: string = '';
+  id: string|null;
 
   constructor(
-    private formBuilder: FormBuilder,
     private router: Router,
     private httpService: HttpService,
     private authService: AuthService
   ) { 
-    this.id=authService.getId;
+    this.id = this.authService.getId;
   }
 
   ngOnInit() {
-    this.initForm();
-    this.getEvent();
+    this.getEvents();
   }
 
-  initForm() {
-    this.formModel = this.formBuilder.group({
-      eventId: ['', Validators.required],
-      studentId: ['', Validators.required],
-      status: ['registered']
-    });
-  }
-
-  getEvent(): void {
+  getEvents(): void {
     this.httpService.GetAlleventsforstudent().subscribe(
       (data) => {
         this.eventList = data;
@@ -57,35 +42,20 @@ export class RegisterForEventComponent implements OnInit {
     );
   }
 
-  submit() {
-    if (this.formModel.valid) {
-      const eventId = this.formModel.get('eventId').value;
-      // const studentId = this.formModel.get('studentId').value;
-      const eventRegistration = {studentId:this.formModel.get('studentId').value,status:"registered"}
-      
-      // console.log("Form Value is "+this.formModel.get('eventId1').value);
-      // console.log("AfterAssign "+ eventId);
+  registerForEvent(eventId: string) {
+    const eventRegistration = { studentId: this.id, status: "registered" };
 
-      // console.log("Form Value for Student Idis "+this.formModel.get('studentId').value);
-      // console.log("AfterAssign Student Id "+ studentId);
-
-
-      this.httpService.registerForEvent(eventId, eventRegistration).subscribe(
-        (response) => {
-          this.showError = false
-          this.showMessage = true;
-          this.responseMessage = 'Registration successful';
-          this.formModel.reset();
-        },
-        (error) => {
-          this.showMessage = false;
-          this.showError = true;
-          this.errorMessage = error.message || 'An error occurred during registration';
-        }
-      );
-    } else {
-      this.showError = true;
-      this.errorMessage = 'Please fill all required fields';
-    }
+    this.httpService.registerForEvent(eventId, eventRegistration).subscribe(
+      (response) => {
+        this.showError = false;
+        this.showMessage = true;
+        this.responseMessage = 'Registration successful';
+      },
+      (error) => {
+        this.showMessage = false;
+        this.showError = true;
+        this.errorMessage = error.message || 'An error occurred during registration';
+      }
+    );
   }
 }

@@ -1,38 +1,33 @@
 <div class="container">
   <h2>Event Registration Status</h2>
   
-  <form [formGroup]="formModel" (ngSubmit)="searchEvent()">
-    <div class="search-section">
-      <label for="studentId">Student ID</label>
-      <input type="text" id="studentId" formControlName="searchTerm" class="form-control">
-      <button type="submit" class="btn btn-primary">Search</button>
-    </div>
-  </form>
-
-  <div *ngIf="eventObj" class="booking-info">
-    <h3>Booking Information</h3>
-    <table class="table">
+  <div class="booking-info">
+    <table class="table" *ngIf="eventObj && eventObj.length > 0">
       <thead>
         <tr>
           <th>Sr#</th>
           <th>Status</th>
           <th>Event</th>
+          <th>Date</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let event of eventObj; ">
-          <td>{{ event.id }}</td>
+        <tr *ngFor="let event of eventObj; let i = index">
+          <td>{{ i + 1 }}</td>
           <td>{{ event.status }}</td>
           <td>
             <div>Description: {{ event.event.description }}</div>
             <div>Materials: {{ event.event.materials }}</div>
             <div>Name: {{ event.event.name }}</div>
+            <!-- <div>Date: {{ event.event.date | date: 'dd-MM-yyyy' }}</div> -->
           </td>
+          <td> {{ event.event.date | date: 'dd-MM-yyyy' }}</td>
         </tr>
       </tbody>
     </table>
+    <p *ngIf="!eventObj || eventObj.length === 0">No registered events found.</p>
   </div>
-
+  
   <div *ngIf="showMessage" class="alert alert-success mt-3">
     {{ responseMessage }}
   </div>
