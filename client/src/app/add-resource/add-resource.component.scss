@@ -1,6 +1,6 @@
 /* Main Container Styling */
 .container {
-  width: 120%; /* Adjust width as needed */
+  width: 150%; /* Adjust width as needed */
   height: auto; /* Let height adjust based on content */
   min-height: 100vh; /* Ensure it takes up a reasonable portion of the viewport */
   margin: -15px auto;
@@ -16,6 +16,7 @@
   overflow-y: auto; /* Enable vertical scrolling if needed */
   overflow-x: hidden; /* Prevent horizontal scrolling */
   margin-top: 110%;
+  margin-left: -20%;
   opacity: 0; /* Initially hidden */
   animation: fadeIn 1s forwards; /* Fade-in effect */
 }

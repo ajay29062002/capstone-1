@@ -8,10 +8,11 @@ html, body {
 }
  
 .container-body {
-  background-color: var(--bg-color);
+ background-color: var(--bg-color);
   color: var(--text-color);
   font-family: 'Roboto', sans-serif;
-  background-image: url("../../../client/src/assets/fest.jpg");
+  // background-image: url("../assets/allocate.jpg");
+  
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
@@ -420,7 +421,7 @@ html, body {
   background-color: var(--bg-color);
   color: var(--text-color);
   font-family: 'Roboto', sans-serif;
-  background-image: url("../../../client/src/assets/fest.jpg");
+  background-image: url("../../../client/src/assets/bg.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
