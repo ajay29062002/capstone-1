@@ -1,62 +1,53 @@
 <div class="container">
   <h1 class="my-4 text-center">Manage Resource</h1>
 
-  <div class="card mb-4">
-    <div class="card-header">Add Resource</div>
-    <div class="card-body">
-      <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
-        <div class="form-row">
-          <div class="form-group col-md-4">
-            <label for="description">Description</label>
-            <input type="text" id="description" formControlName="description" class="form-control"
-              placeholder="Description">
-            <div *ngIf="itemForm.get('description')?.invalid && itemForm.get('description')?.touched"
-              class="text-danger">
-              Description is required.
-            </div>
-          </div>
-          <div class="form-group col-md-4">
-            <label for="resourceType">Resource Type</label>
-            <input type="text" id="resourceType" formControlName="resourceType" class="form-control"
-              placeholder="Resource Type">
-            <div *ngIf="itemForm.get('resourceType')?.invalid && itemForm.get('resourceType')?.touched"
-              class="text-danger">
-              Resource Type is required.
-            </div>
-          </div>
-          <div class="form-group col-md-4">
-            <label for="availability">Availability</label>
-            <select id="availability" formControlName="availability" class="form-control">
-              <option value="" disabled selected>Select availability</option>
-              <option value="available">Available</option>
-              <option value="unavailable">Unavailable</option>
-            </select>
-            <div *ngIf="itemForm.get('availability')?.invalid && itemForm.get('availability')?.touched"
-              class="text-danger">
-              Availability is required.
-            </div>
+<div class="card mb-4">
+  <div class="card-header">Add Resource</div>
+  <div class="card-body">
+    <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label for="description">Description</label>
+          <input type="text" id="description" formControlName="description" class="form-control"
+            placeholder="Description">
+          <div *ngIf="itemForm.get('description')?.invalid && itemForm.get('description')?.touched"
+            class="text-danger">
+            Description is required.
           </div>
         </div>
-        <div class="form-row mt-3">
-          <div class="col-md-12 d-flex justify-content-center">
-            <button type="submit" class="btn btn-primary" [disabled]="itemForm.invalid">Add Resource</button>
+        <div class="form-group col-md-6">
+          <label for="resourceType">Resource Type</label>
+          <input type="text" id="resourceType" formControlName="resourceType" class="form-control"
+            placeholder="Resource Type">
+          <div *ngIf="itemForm.get('resourceType')?.invalid && itemForm.get('resourceType')?.touched"
+            class="text-danger">
+            Resource Type is required.
           </div>
         </div>
-      </form>
-    </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-12 d-flex justify-content-center">
+          <button type="submit" class="btn btn-primary" [disabled]="itemForm.invalid">Add Resource</button>
+        </div>
+      </div>
+    </form>
   </div>
+</div>
 
   <div class="card mt-4">
     <div class="card-header">Resource Information</div>
     <div class="card-body">
       <div class="row mb-3">
         <div class="col-md-6">
-          <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search resources..." [(ngModel)]="searchTerm"
-              (input)="onSearch()">
-            <div class="input-group-append">
-              <button class="btn btn-outline-secondary" type="button" (click)="clearSearch()">Clear</button>
+          <div class="d-flex">
+            <div class="input-group flex-grow-1">
+              <input type="text" class="form-control" placeholder="Search events..." [(ngModel)]="searchTerm"
+                (input)="onSearch()">
             </div>
+            <button class="btn btn-outline-secondary" style="margin-left: 15px;" type="button" (click)="clearSearch()"
+              *ngIf="searchTerm">
+              Clear <i class="fas fa-times"></i>
+            </button>
           </div>
         </div>
         <div class="col-md-6 text-right">
@@ -89,8 +80,11 @@
           </tbody>
         </table>
       </div>
-      <div *ngIf="filteredResources.length === 0" class="alert alert-info mt-4">
-        No resources found!
+      <div *ngIf="resourceList.length > 0 && filteredResources.length === 0" class="alert alert-info mt-4">
+        No resources found matching your search criteria!
+      </div>
+      <div *ngIf="resourceList.length === 0" class="alert alert-info mt-4">
+        No resources have been created yet.
       </div>
 
       <nav *ngIf="filteredResources.length > 0" aria-label="Resource pagination">

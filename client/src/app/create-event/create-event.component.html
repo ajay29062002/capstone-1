@@ -31,9 +31,6 @@
           <div class="col-md-3 mb-3">
             <label for="date">Date</label>
             <input type="date" id="date" formControlName="date" class="form-control" [min]="minDate">
-            <!-- <div *ngIf="itemForm.get('date')?.touched" class="text-danger">
-              Optional field: Choose a date
-            </div> -->
           </div>
         </div>
 
@@ -50,17 +47,20 @@
     <div class="card-body">
       <div class="row mb-3">
         <div class="col-md-6">
-          <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search events..." [(ngModel)]="searchTerm"
-              (input)="onSearch()">
-            <div class="input-group-append">
-              <button class="btn btn-outline-secondary" type="button" (click)="clearSearch()">Clear</button>
+          <div class="d-flex">
+            <div class="input-group flex-grow-1">
+              <input type="text" class="form-control" placeholder="Search events..." [(ngModel)]="searchTerm"
+                (input)="onSearch()">
             </div>
+            <button class="btn btn-outline-secondary" style="margin-left: 15px;" type="button" (click)="clearSearch()"
+              *ngIf="searchTerm">
+              Clear <i class="fas fa-times"></i>
+            </button>
           </div>
         </div>
         <div class="col-md-6 text-right">
           <button class="btn btn-primary" (click)="toggleSort()">
-            Sort by Name {{ isAscending ? '(A-Z)' : '(Z-A)' }}
+            Sort by Date {{ isAscending ? '(Oldest First)' : '(Newest First)' }}
           </button>
         </div>
       </div>
@@ -78,41 +78,54 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let event of paginatedEvents; let i = index">
-              <td>{{ (currentPage - 1) * itemsPerPage + i + 1 }}</td>
-              <td>{{ event.name }}</td>
-              <td>{{ event.description }}</td>
-              <td>{{ event.materials }}</td>
-              <td>{{ event.date | date:'dd-MM-yyyy' }}</td>
-              <td>
-                <div class="table-responsive">
-                  <table class="table table-bordered mb-0">
-                    <thead>
-                      <tr>
-                        <th>Sr#</th>
-                        <th>Type</th>
-                        <th>Description</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr *ngFor="let resource of event.resourceAllocations; let j = index">
-                        <td>{{ j + 1 }}</td>
-                        <td>{{ resource.resourceType }}</td>
-                        <td>{{ resource.description }}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </td>
-              <td>
-                <button class="btn btn-danger btn-sm" (click)="onDelete(event.id)">Delete</button>
-              </td>
-            </tr>
+            <ng-container *ngFor="let event of paginatedEvents; let i = index">
+              <tr>
+                <td>{{ (currentPage - 1) * itemsPerPage + i + 1 }}</td>
+                <td>{{ event.name }}</td>
+                <td>{{ event.description }}</td>
+                <td>{{ event.materials }}</td>
+                <td>{{ event.date | date:'dd-MM-yyyy' }}</td>
+                <td>
+                  <button class="btn btn-info btn-sm" (click)="toggleExpand(event)">
+                    {{ isExpanded(event) ? 'Hide' : 'Show' }} Resources ({{ event.resourceAllocations.length }})
+                  </button>
+                </td>
+                <td>
+                  <button class="btn btn-danger btn-sm" (click)="onDelete(event.id)">Delete</button>
+                </td>
+              </tr>
+              <tr *ngIf="isExpanded(event)">
+                <td colspan="7">
+                  <div class="p-3">
+                    <h5>Resources for {{ event.name }}</h5>
+                    <table class="table table-sm table-bordered">
+                      <thead>
+                        <tr>
+                          <th>Sr#</th>
+                          <th>Type</th>
+                          <th>Description</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let resource of event.resourceAllocations; let j = index">
+                          <td>{{ j + 1 }}</td>
+                          <td>{{ resource.resourceType }}</td>
+                          <td>{{ resource.description }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </td>
+              </tr>
+            </ng-container>
           </tbody>
         </table>
       </div>
-      <div *ngIf="filteredEvents.length === 0" class="alert alert-info mt-4">
-        No events found!
+      <div *ngIf="eventList.length > 0 && filteredEvents.length === 0" class="alert alert-info mt-4">
+        No events found matching your search criteria!
+      </div>
+      <div *ngIf="eventList.length === 0" class="alert alert-info mt-4">
+        No events have been created yet.
       </div>
 
       <!-- Pagination controls -->

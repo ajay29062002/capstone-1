@@ -50,6 +50,12 @@ public class InstitutionController {
         return new ResponseEntity<>(resources, HttpStatus.OK);
     }
 
+    @GetMapping("/api/institution/resources/available")
+    public ResponseEntity<List<Resource>> getAllAvailableResources() {
+        List<Resource> resources = resourceService.getAllAvailableResources();
+        return new ResponseEntity<>(resources, HttpStatus.OK);
+    }
+
     @GetMapping("/api/institution/resources/sorted")
     public ResponseEntity<List<Resource>> getAllResourcesSortedByDescription(
             @RequestParam(defaultValue = "true") boolean ascending) {
@@ -61,6 +67,7 @@ public class InstitutionController {
     public ResponseEntity<Event> allocateResource(@RequestParam("eventId") Long eventId,
             @RequestParam("resourceId") Long resourceId) {
         Event event = eventService.allocateResourceToEvent(eventId, resourceId);
+        resourceService.updateResourceAvailability(resourceId, "unavailable");
         return new ResponseEntity<>(event, HttpStatus.OK);
     }
 

@@ -1,6 +1,5 @@
 package com.wecp.educationalresourcedistributionsystem.entity;
 
-
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -11,20 +10,10 @@ public class Resource {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String resourceType;
-
     private String description;
-
     private String availability;
-
-    public String getAvailability() {
-        return availability;
-    }
-
-    public void setAvailability(String availability) {
-        this.availability = availability;
-    }
+    private boolean allocated;
 
     @ManyToOne
     @JsonIgnore
@@ -62,5 +51,20 @@ public class Resource {
     public void setEvent(Event event) {
         this.event = event;
     }
-}
 
+    public boolean isAllocated() {
+        return allocated;
+    }
+
+    public void setAllocated(boolean allocated) {
+        this.allocated = allocated;
+    }
+
+    public String getAvailability() {
+        return availability;
+    }
+
+    public void setAvailability(String availability) {
+        this.availability = availability;
+    }
+}

@@ -38,7 +38,7 @@ export class AddResourceComponent implements OnInit {
     this.itemForm = this.formBuilder.group({
       description: ['', Validators.required],
       resourceType: ['', Validators.required],
-      availability: ['', Validators.required]
+      availability: ['available', Validators.required]
     });
     this.filteredResources = [];
   }
@@ -88,7 +88,19 @@ export class AddResourceComponent implements OnInit {
 
   toggleSort(): void {
     this.isAscending = !this.isAscending;
-    this.getResources();
+    if (this.searchTerm) {
+      this.sortFilteredResources();
+    } else {
+      this.getResources();
+    }
+  }
+
+  sortFilteredResources(): void {
+    this.filteredResources.sort((a, b) => {
+      const descA = a.description.toLowerCase();
+      const descB = b.description.toLowerCase();
+      return this.isAscending ? descA.localeCompare(descB) : descB.localeCompare(descA);
+    });
   }
 
   onPageChange(page: number): void {
@@ -105,12 +117,18 @@ export class AddResourceComponent implements OnInit {
     if (!this.searchTerm) {
       this.filteredResources = [...this.resourceList];
     } else {
-      this.filteredResources = this.resourceList.filter(resource =>
-        resource.description.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-        resource.resourceType.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-        resource.availability.toLowerCase().includes(this.searchTerm.toLowerCase())
-      );
+      const searchLower = this.searchTerm.toLowerCase();
+      this.filteredResources = this.resourceList.filter(resource => {
+        if (searchLower === 'available' || searchLower === 'unavailable') {
+          return resource.availability.toLowerCase() === searchLower;
+        } else {
+          return resource.description.toLowerCase().includes(searchLower) ||
+            resource.resourceType.toLowerCase().includes(searchLower) ||
+            resource.availability.toLowerCase().includes(searchLower);
+        }
+      });
     }
+    this.sortFilteredResources(); // Apply sorting after filtering
     this.totalItems = this.filteredResources.length;
     this.currentPage = 1;
   }
@@ -119,4 +137,5 @@ export class AddResourceComponent implements OnInit {
     this.searchTerm = '';
     this.onSearch();
   }
+
 }

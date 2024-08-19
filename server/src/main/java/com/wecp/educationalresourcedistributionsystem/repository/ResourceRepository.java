@@ -13,4 +13,6 @@ public interface ResourceRepository extends JpaRepository<Resource, Long> {
 
     List<Resource> findAll(Sort sort);
 
+    List<Resource> findByAvailability(String string);
+
 }

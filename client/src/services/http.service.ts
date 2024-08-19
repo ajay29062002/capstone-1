@@ -36,7 +36,7 @@ export class HttpService {
     return this.http.get(`${this.serverName}/api/institution/events`, { headers: this.getHeaders() });
   }
 
-  getAllEventsSortedByName(ascending: boolean): Observable<any[]> {
+  getAllEventsSortedByDate(ascending: boolean): Observable<any[]> {
     return this.http.get<any[]>(`${this.serverName}/api/institution/events/sorted?ascending=${ascending}`, { headers: this.getHeaders() });
   }
 
@@ -46,6 +46,10 @@ export class HttpService {
 
   GetAllResources(): Observable<any> {
     return this.http.get(`${this.serverName}/api/institution/resources`, { headers: this.getHeaders() });
+  }
+
+  GetAvailableResources(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.serverName}/api/institution/resources/available`, { headers: this.getHeaders() });
   }
 
   getAllResourcesSortedByDescription(ascending: boolean): Observable<any[]> {
@@ -89,8 +93,5 @@ export class HttpService {
     return this.http.delete(`${this.serverName}/api/institution/resources/${resourceId}`, { headers: this.getHeaders() });
 
   }
-
-
-
 
 }

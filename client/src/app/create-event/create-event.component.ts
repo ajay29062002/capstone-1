@@ -3,11 +3,13 @@ import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators }
 import { Router } from '@angular/router';
 import { HttpService } from '../../services/http.service';
 import { AuthService } from '../../services/auth.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-create-event',
   templateUrl: './create-event.component.html',
-  styleUrls: ['./create-event.component.scss']
+  styleUrls: ['./create-event.component.scss'],
+  providers: [DatePipe]
 })
 export class CreateEventComponent implements OnInit {
   itemForm: FormGroup;
@@ -28,12 +30,14 @@ export class CreateEventComponent implements OnInit {
   searchTerm: string = '';
 
   isAscending: boolean = true;
+  expandedEvent: any = null;
 
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
     private httpService: HttpService,
     private authService: AuthService,
+    private datePipe: DatePipe
   ) {
     this.minDate = this.getTodayDate();
 
@@ -41,7 +45,7 @@ export class CreateEventComponent implements OnInit {
       name: ['', Validators.required],
       description: ['', Validators.required],
       materials: ['', Validators.required],
-      date: ['']
+      date: [this.getTodayDate()]
     });
   }
 
@@ -50,7 +54,7 @@ export class CreateEventComponent implements OnInit {
   }
 
   getEvent(): void {
-    this.httpService.getAllEventsSortedByName(this.isAscending).subscribe(
+    this.httpService.getAllEventsSortedByDate(this.isAscending).subscribe(
       (data) => {
         this.eventList = data;
         this.filteredEvents = [...this.eventList];
@@ -66,7 +70,19 @@ export class CreateEventComponent implements OnInit {
 
   toggleSort(): void {
     this.isAscending = !this.isAscending;
-    this.getEvent();
+    if (this.searchTerm) {
+      this.sortFilteredEvents();
+    } else {
+      this.getEvent();
+    }
+  }
+
+  sortFilteredEvents(): void {
+    this.filteredEvents.sort((a, b) => {
+      const dateA = new Date(a.date).getTime();
+      const dateB = new Date(b.date).getTime();
+      return this.isAscending ? dateA - dateB : dateB - dateA;
+    });
   }
 
   onPageChange(page: number): void {
@@ -115,13 +131,19 @@ export class CreateEventComponent implements OnInit {
     if (!this.searchTerm) {
       this.filteredEvents = [...this.eventList];
     } else {
-      this.filteredEvents = this.eventList.filter(event =>
-        (event.name?.toLowerCase().includes(this.searchTerm.toLowerCase()) || '') ||
-        (event.description?.toLowerCase().includes(this.searchTerm.toLowerCase()) || '') ||
-        (event.materials?.toLowerCase().includes(this.searchTerm.toLowerCase()) || '') ||
-        (event.date?.includes(this.searchTerm) || '')
-      );
+      const searchLower = this.searchTerm.toLowerCase();
+      this.filteredEvents = this.eventList.filter(event => {
+        const formattedDate = this.datePipe.transform(event.date, 'dd-MM-yyyy') || '';
+
+        return (
+          (event.name?.toLowerCase().includes(searchLower) || '') ||
+          (event.description?.toLowerCase().includes(searchLower) || '') ||
+          (event.materials?.toLowerCase().includes(searchLower) || '') ||
+          formattedDate.includes(searchLower)
+        );
+      });
     }
+    this.sortFilteredEvents(); // Apply sorting after filtering
     this.totalItems = this.filteredEvents.length;
     this.currentPage = 1;
   }
@@ -137,5 +159,17 @@ export class CreateEventComponent implements OnInit {
     const month = (today.getMonth() + 1).toString().padStart(2, '0');
     const day = today.getDate().toString().padStart(2, '0');
     return `${year}-${month}-${day}`;
+  }
+
+  toggleExpand(event: any): void {
+    if (this.expandedEvent === event) {
+      this.expandedEvent = null;
+    } else {
+      this.expandedEvent = event;
+    }
+  }
+
+  isExpanded(event: any): boolean {
+    return this.expandedEvent === event;
   }
 }

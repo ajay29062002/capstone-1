@@ -9,6 +9,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -19,6 +21,9 @@ public class EventService {
 
     @Autowired
     private ResourceRepository resourceRepository;
+
+    @Autowired
+    private ResourceService resourceService;
 
     public Event createEvent(Event event) {
         return eventRepository.save(event);
@@ -47,14 +52,35 @@ public class EventService {
                 .orElseThrow(() -> new EntityNotFoundException("Event not found"));
         Resource resource = resourceRepository.findById(resourceId)
                 .orElseThrow(() -> new EntityNotFoundException("Resource not found"));
+
+        if (resource.isAllocated()) {
+            throw new IllegalStateException("Resource is already allocated to an event");
+        }
+
+        if (event.getDate() != null && event.getDate().isBefore(LocalDate.now())) {
+            throw new IllegalStateException("Cannot allocate resource to a past event");
+        }
+
         event.getResourceAllocations().add(resource);
         resource.setEvent(event);
+
+        resourceService.updateResourceAllocation(resourceId, true);
+
         return eventRepository.save(event);
     }
 
     public void deleteEvent(Long eventId) {
-        eventRepository.deleteById(eventId);
+        Event event = eventRepository.findById(eventId)
+                .orElseThrow(() -> new EntityNotFoundException("Event not found"));
 
+        for (Resource resource : event.getResourceAllocations()) {
+            resource.setEvent(null);
+            resource.setAllocated(false);
+            resource.setAvailability("available");
+            resourceRepository.save(resource);
+        }
+
+        eventRepository.delete(event);
     }
 
 }

@@ -77,7 +77,7 @@ export class ResourceAllocateComponent implements OnInit {
   }
 
   getResources(): void {
-    this.httpService.GetAllResources().subscribe(
+    this.httpService.GetAvailableResources().subscribe(
       (data) => {
         this.resourceList = data;
         this.filteredResourceList = [...this.resourceList];
