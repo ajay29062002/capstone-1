@@ -1,9 +1,10 @@
 <div class="container-fluid">
   <h1 class="my-4 text-center">Manage Event</h1>
+
   <div class="card mb-4">
     <div class="card-header">Create Event</div>
     <div class="card-body">
-      <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
+      <form [formGroup]="itemForm" (ngSubmit)="onSubmit()" (input)="clearMessages()">
         <div class="row">
           <div class="col-md-3 mb-3">
             <label for="name">Name</label>
@@ -31,17 +32,28 @@
           <div class="col-md-3 mb-3">
             <label for="date">Date</label>
             <input type="date" id="date" formControlName="date" class="form-control" [min]="minDate">
+            <div *ngIf="itemForm.get('date')?.invalid && itemForm.get('date')?.touched" class="text-danger">
+              Date is required.
+            </div>
           </div>
         </div>
-
         <div class="row">
           <div class="col-12 text-center">
-            <button type="submit" class="btn btn-primary" [disabled]="itemForm.invalid">Submit</button>
+            <button type="submit" class="btn btn-primary" [disabled]="itemForm.invalid">Create Event</button>
           </div>
         </div>
       </form>
     </div>
   </div>
+
+  <div *ngIf="showError" class="alert alert-danger mt-3">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="showMessage" class="alert alert-success mt-3">
+    {{ responseMessage }}
+  </div>
+
   <div class="card mt-4">
     <div class="card-header">Event Information</div>
     <div class="card-body">
@@ -128,7 +140,6 @@
         No events have been created yet.
       </div>
 
-      <!-- Pagination controls -->
       <nav *ngIf="filteredEvents.length > 0" aria-label="Event pagination">
         <ul class="pagination justify-content-center">
           <li class="page-item" [class.disabled]="currentPage === 1">

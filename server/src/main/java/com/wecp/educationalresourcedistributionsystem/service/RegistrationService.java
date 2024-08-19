@@ -20,7 +20,15 @@ public class RegistrationService {
 
     public EventRegistration registerForEvent(Long eventId, EventRegistration registration) {
         Event event = eventRepository.findById(eventId)
-            .orElseThrow(() -> new EntityNotFoundException("Event not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Event not found"));
+
+        boolean alreadyRegistered = registrationRepository.existsByEventIdAndStudentId(eventId,
+                registration.getStudentId());
+
+        if (alreadyRegistered) {
+            throw new IllegalStateException("Student is already registered for this event");
+        }
+
         registration.setEvent(event);
         return registrationRepository.save(registration);
     }
@@ -28,4 +36,9 @@ public class RegistrationService {
     public List<EventRegistration> getRegistrationsByStudentId(Long studentId) {
         return registrationRepository.findByStudentId(studentId);
     }
+
+    public List<EventRegistration> getAllEventRegistrations() {
+        return registrationRepository.findAll();
+    }
+
 }

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpService } from '../../services/http.service';
 import { AuthService } from '../../services/auth.service';
@@ -13,16 +13,15 @@ import { DatePipe } from '@angular/common';
 })
 export class CreateEventComponent implements OnInit {
   itemForm: FormGroup;
-  formModel: any = {};
-  showError: boolean = false;
-  errorMessage: any;
   eventList: any[] = [];
   filteredEvents: any[] = [];
-  assignModel: any = {};
-  showMessage: any;
-  responseMessage: any;
+  showError: boolean = false;
+  errorMessage: string = '';
+  showMessage: boolean = false;
+  responseMessage: string = '';
   minDate: string;
 
+  // Pagination variables
   Math = Math;
   currentPage: number = 1;
   itemsPerPage: number = 5;
@@ -37,7 +36,8 @@ export class CreateEventComponent implements OnInit {
     private router: Router,
     private httpService: HttpService,
     private authService: AuthService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private cdr: ChangeDetectorRef
   ) {
     this.minDate = this.getTodayDate();
 
@@ -45,15 +45,15 @@ export class CreateEventComponent implements OnInit {
       name: ['', Validators.required],
       description: ['', Validators.required],
       materials: ['', Validators.required],
-      date: [this.getTodayDate()]
+      date: [this.getTodayDate(), Validators.required]
     });
   }
 
   ngOnInit(): void {
-    this.getEvent();
+    this.getEvents();
   }
 
-  getEvent(): void {
+  getEvents(): void {
     this.httpService.getAllEventsSortedByDate(this.isAscending).subscribe(
       (data) => {
         this.eventList = data;
@@ -68,12 +68,60 @@ export class CreateEventComponent implements OnInit {
     );
   }
 
+  onSubmit(): void {
+    if (this.itemForm.valid) {
+      const newEvent = this.itemForm.value;
+
+      // Check if event with same name already exists
+      const isDuplicate = this.eventList.some(event =>
+        event.name.toLowerCase() === newEvent.name.toLowerCase()
+      );
+
+      if (isDuplicate) {
+        this.showError = true;
+        this.errorMessage = 'An event with this name already exists';
+        return;
+      }
+
+      this.httpService.createEvent(newEvent).subscribe(
+        (response) => {
+          this.showError = false;
+          this.showMessage = true;
+          this.responseMessage = 'Event created successfully';
+          this.itemForm.reset({
+            name: '',
+            description: '',
+            materials: '',
+            date: this.getTodayDate()
+          });
+          this.itemForm.markAsPristine();
+          this.itemForm.markAsUntouched();
+          this.getEvents();
+          this.cdr.detectChanges();
+        },
+        (error) => {
+          this.showMessage = false;
+          this.showError = true;
+          this.errorMessage = error.message || 'An error occurred while creating the event';
+        }
+      );
+    } else {
+      this.itemForm.markAllAsTouched();
+    }
+  }
+
+  onDelete(eventId: any): void {
+    this.httpService.deleteEvent(eventId).subscribe(() => {
+      this.getEvents();
+    });
+  }
+
   toggleSort(): void {
     this.isAscending = !this.isAscending;
     if (this.searchTerm) {
       this.sortFilteredEvents();
     } else {
-      this.getEvent();
+      this.getEvents();
     }
   }
 
@@ -95,38 +143,6 @@ export class CreateEventComponent implements OnInit {
     return this.filteredEvents.slice(startIndex, endIndex);
   }
 
-  onSubmit(): void {
-    if (this.itemForm.valid) {
-      const formData = { ...this.itemForm.value };
-
-      if (!formData.date) {
-        delete formData.date;
-      }
-
-      this.httpService.createEvent(formData).subscribe(
-        (response) => {
-          this.showMessage = true;
-          this.responseMessage = 'Event created successfully';
-          this.itemForm.reset();
-          this.getEvent();
-        },
-        (error) => {
-          this.showError = true;
-          this.errorMessage = 'Failed to create event';
-          console.error('Error creating event:', error);
-        }
-      );
-    } else {
-      this.itemForm.markAllAsTouched();
-    }
-  }
-
-  onDelete(eventId: any): void {
-    this.httpService.deleteEvent(eventId).subscribe(() => {
-      this.getEvent();
-    });
-  }
-
   onSearch(): void {
     if (!this.searchTerm) {
       this.filteredEvents = [...this.eventList];
@@ -134,16 +150,13 @@ export class CreateEventComponent implements OnInit {
       const searchLower = this.searchTerm.toLowerCase();
       this.filteredEvents = this.eventList.filter(event => {
         const formattedDate = this.datePipe.transform(event.date, 'dd-MM-yyyy') || '';
-
-        return (
-          (event.name?.toLowerCase().includes(searchLower) || '') ||
-          (event.description?.toLowerCase().includes(searchLower) || '') ||
-          (event.materials?.toLowerCase().includes(searchLower) || '') ||
-          formattedDate.includes(searchLower)
-        );
+        return event.name.toLowerCase().includes(searchLower) ||
+          event.description.toLowerCase().includes(searchLower) ||
+          event.materials.toLowerCase().includes(searchLower) ||
+          formattedDate.includes(searchLower);
       });
     }
-    this.sortFilteredEvents(); // Apply sorting after filtering
+    this.sortFilteredEvents();
     this.totalItems = this.filteredEvents.length;
     this.currentPage = 1;
   }
@@ -171,5 +184,12 @@ export class CreateEventComponent implements OnInit {
 
   isExpanded(event: any): boolean {
     return this.expandedEvent === event;
+  }
+
+  clearMessages(): void {
+    this.showError = false;
+    this.showMessage = false;
+    this.errorMessage = '';
+    this.responseMessage = '';
   }
 }

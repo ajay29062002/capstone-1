@@ -13,17 +13,28 @@ body {
 }
 
 .container {
-  width: 90%; /* Adjusted to fit within the page */
+  width: 150%; /* Adjusted to fit within the page */
   max-width: 800px;
   padding: 20px; /* Reduced padding to fit better on smaller screens */
   background-color: rgba(255, 255, 255, 0.9);
   border-radius: 10px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  margin-top: 60%;
+  opacity: 0; /* Initially hidden */
+  animation: fadeIn 1s forwards; /* Fade-in effect */
+  margin-left: -25%;
 }
 
 .container:hover {
   transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
 }
 
 h2 {
@@ -32,6 +43,8 @@ h2 {
   color: #4a4a4a;
   font-size: 24px; /* Reduced font size for better fitting */
   font-weight: 600;
+  opacity: 0; /* Initially hidden */
+  animation: fadeIn 1s forwards 0.5s; /* Fade-in effect with delay */
 }
 
 .table {
@@ -46,6 +59,7 @@ h2 {
   border-top: 1px solid #dee2e6;
   font-size: 14px; /* Slightly reduced font size */
   color: #333;
+  transition: background-color 0.3s ease, color 0.3s ease; /* Added transition */
 }
 
 .table th {
@@ -58,6 +72,11 @@ h2 {
   background-color: rgba(225, 245, 254, 0.8); /* Very light blue with some transparency */
 }
 
+.table-striped tbody tr:hover {
+  background-color: rgba(129, 212, 250, 0.3); /* Light blue on hover */
+  color: #007bff; /* Change text color on hover */
+}
+
 .btn-primary {
   color: #fff;
   background: linear-gradient(to right, #81d4fa, #4fc3f7); /* Light blue gradient */
@@ -67,12 +86,13 @@ h2 {
   font-weight: 500;
   border-radius: 8px;
   cursor: pointer;
-  transition: opacity 0.3s ease, transform 0.2s ease-in-out;
+  transition: opacity 0.3s ease, transform 0.2s ease-in-out, box-shadow 0.3s ease; /* Added transition */
 }
 
 .btn-primary:hover {
   opacity: 0.9;
   transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3); /* Added shadow on hover */
 }
 
 .alert {
@@ -81,6 +101,8 @@ h2 {
   border: 1px solid transparent;
   border-radius: 8px;
   font-size: 14px;
+  opacity: 0; /* Initially hidden */
+  animation: fadeIn 1s forwards 1s; /* Fade-in effect with delay */
 }
 
 .alert-danger {

@@ -60,5 +60,4 @@ public class EventRegistration {
 
     
 
-    // Constructors, getters, and setters
 }

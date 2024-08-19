@@ -8,5 +8,9 @@ import java.util.List;
 
 @Repository
 public interface EventRegistrationRepository extends JpaRepository<EventRegistration, Long> {
+
     List<EventRegistration> findByStudentId(Long studentId);
+
+    boolean existsByEventIdAndStudentId(Long eventId, Long studentId);
+
 }

@@ -1,9 +1,9 @@
 /* Main Container Styling */
 .container {
-  max-width: 100%; /* Adjust width as needed */
+  width: 120%; /* Adjust width as needed */
   height: auto; /* Let height adjust based on content */
   min-height: 100vh; /* Ensure it takes up a reasonable portion of the viewport */
-  margin: 0 auto;
+  margin: -15px auto;
   padding: 15px; /* Padding around content */
   background-color: rgba(255, 255, 255, 0.85); /* Light transparent background */
   border-radius: 6px; /* Slightly smaller rounded corners */
@@ -11,19 +11,34 @@
   box-sizing: border-box; /* Include padding and border in element's total width and height */
   display: flex;
   flex-direction: column;
+  align-items: center; /* Center items horizontally */
+  justify-content: center; /* Center items vertically */
   overflow-y: auto; /* Enable vertical scrolling if needed */
   overflow-x: hidden; /* Prevent horizontal scrolling */
-  margin-top: 70%;
+  margin-top: 110%;
+  opacity: 0; /* Initially hidden */
+  animation: fadeIn 1s forwards; /* Fade-in effect */
 }
 
 /* Card Styling */
 .card {
   width: 100%; /* Full width of the container */
+  max-width: 600px; /* Maximum width for the card */
   margin-bottom: 1rem; /* Space below cards */
   border: 1px solid #ddd;
   border-radius: 6px; /* Slightly smaller rounded corners */
   background: rgba(255, 255, 255, 0.8); /* Slightly transparent background */
   overflow: hidden; /* Prevent overflow */
+  opacity: 0; /* Initially hidden */
+  animation: fadeIn 1s forwards; /* Fade-in effect */
+  animation-delay: 0.5s; /* Delay for staggered effect */
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
 }
 
 /* Form Styling */
@@ -59,23 +74,30 @@
 
 /* Button Styling */
 .btn-primary {
-  background: linear-gradient(to right, #81d4fa, #4fc3f7); /* Light blue gradient */
-  color: white;
+  background: linear-gradient(to right, #b3e5fc, #81d4fa); /* Light blue gradient */
+  color: #01579b;
+  font-weight: bold;
   border: none;
-  padding: 6px 12px; /* Reduced padding */
+  padding: 8px 16px; /* Adjusted padding for better fit */
   border-radius: 4px;
-  font-size: 0.75rem; /* Smaller font size */
-  transition: background 0.3s ease, transform 0.2s ease-in-out; /* Smooth transition */
+  cursor: pointer;
+  font-size: 0.875rem; /* Slightly smaller font size */
+  transition: background 0.3s ease, transform 0.2s ease-in-out, box-shadow 0.3s ease; /* Smooth transition */
 }
 
 .btn-primary:hover {
-  background: linear-gradient(to right, #4fc3f7, #0288d1); /* Darker blue gradient on hover */
+  background: linear-gradient(to right, #81d4fa, #4fc3f7); /* Darker blue gradient on hover */
+  box-shadow: 0 0 10px rgba(33, 150, 243, 0.6); /* Glowing effect */
+}
+
+.btn-primary:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
 }
 
 .btn-outline-secondary {
   border: 1px solid #ccc;
   color: #495057;
-  font-size: 0.75rem; /* Smaller font size */
 }
 
 .btn-outline-secondary:hover {

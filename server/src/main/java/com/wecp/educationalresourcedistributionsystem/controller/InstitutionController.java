@@ -1,8 +1,10 @@
 package com.wecp.educationalresourcedistributionsystem.controller;
 
 import com.wecp.educationalresourcedistributionsystem.entity.Event;
+import com.wecp.educationalresourcedistributionsystem.entity.EventRegistration;
 import com.wecp.educationalresourcedistributionsystem.entity.Resource;
 import com.wecp.educationalresourcedistributionsystem.service.EventService;
+import com.wecp.educationalresourcedistributionsystem.service.RegistrationService;
 import com.wecp.educationalresourcedistributionsystem.service.ResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +20,9 @@ public class InstitutionController {
 
     @Autowired
     private ResourceService resourceService;
+
+    @Autowired
+    private RegistrationService registrationService;
 
     @PostMapping("/api/institution/event")
     public ResponseEntity<Event> createEvent(@RequestBody Event event) {
@@ -81,6 +86,12 @@ public class InstitutionController {
     public ResponseEntity<Void> deleteResource(@PathVariable Long resourceId) {
         resourceService.deleteResource(resourceId);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/api/institution/event-registrations")
+    public ResponseEntity<List<EventRegistration>> getAllEventRegistrations() {
+        List<EventRegistration> registrations = registrationService.getAllEventRegistrations();
+        return new ResponseEntity<>(registrations, HttpStatus.OK);
     }
 
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpService } from '../../services/http.service';
@@ -11,14 +11,12 @@ import { AuthService } from '../../services/auth.service';
 })
 export class AddResourceComponent implements OnInit {
   itemForm: FormGroup;
-  formModel: any = {};
-  showError: boolean = false;
-  errorMessage: any;
   resourceList: any[] = [];
   filteredResources: any[] = [];
-  assignModel: any = {};
-  showMessage: any;
-  responseMessage: any;
+  showError: boolean = false;
+  errorMessage: string = '';
+  showMessage: boolean = false;
+  responseMessage: string = '';
 
   // Pagination variables
   Math = Math;
@@ -33,43 +31,18 @@ export class AddResourceComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private httpService: HttpService,
-    private authService: AuthService
+    private authService: AuthService,
+    private cdr: ChangeDetectorRef
   ) {
     this.itemForm = this.formBuilder.group({
       description: ['', Validators.required],
       resourceType: ['', Validators.required],
       availability: ['available', Validators.required]
     });
-    this.filteredResources = [];
   }
 
   ngOnInit(): void {
     this.getResources();
-  }
-
-  onSubmit(): void {
-    if (this.itemForm.valid) {
-      this.httpService.addResource(this.itemForm.value).subscribe(
-        (response) => {
-          this.showMessage = true;
-          this.responseMessage = 'Resource added successfully';
-          this.itemForm.reset();
-          this.getResources();
-        },
-        (error) => {
-          this.showError = true;
-          this.errorMessage = 'Failed to add resource';
-        }
-      );
-    } else {
-      this.itemForm.markAllAsTouched();
-    }
-  }
-
-  onDelete(resourceId: any): void {
-    this.httpService.deleteResource(resourceId).subscribe(() => {
-      this.getResources();
-    });
   }
 
   getResources(): void {
@@ -82,8 +55,56 @@ export class AddResourceComponent implements OnInit {
       (error) => {
         this.showError = true;
         this.errorMessage = 'Failed to fetch resources';
+        console.error('Error fetching resources:', error);
       }
     );
+  }
+
+  onSubmit(): void {
+    if (this.itemForm.valid) {
+      const newResource = this.itemForm.value;
+
+      // Check if resource with same description already exists
+      const isDuplicate = this.resourceList.some(resource =>
+        resource.description.toLowerCase() === newResource.description.toLowerCase()
+      );
+
+      if (isDuplicate) {
+        this.showError = true;
+        this.errorMessage = 'A resource with this description already exists';
+        return;
+      }
+
+      this.httpService.addResource(newResource).subscribe(
+        (response) => {
+          this.showError = false;
+          this.showMessage = true;
+          this.responseMessage = 'Resource added successfully';
+          this.itemForm.reset({
+            description: '',
+            resourceType: '',
+            availability: 'available'
+          });
+          this.itemForm.markAsPristine();
+          this.itemForm.markAsUntouched();
+          this.getResources();
+          this.cdr.detectChanges();
+        },
+        (error) => {
+          this.showMessage = false;
+          this.showError = true;
+          this.errorMessage = error.message || 'An error occurred while adding the resource';
+        }
+      );
+    } else {
+      this.itemForm.markAllAsTouched();
+    }
+  }
+
+  onDelete(resourceId: any): void {
+    this.httpService.deleteResource(resourceId).subscribe(() => {
+      this.getResources();
+    });
   }
 
   toggleSort(): void {
@@ -119,16 +140,12 @@ export class AddResourceComponent implements OnInit {
     } else {
       const searchLower = this.searchTerm.toLowerCase();
       this.filteredResources = this.resourceList.filter(resource => {
-        if (searchLower === 'available' || searchLower === 'unavailable') {
-          return resource.availability.toLowerCase() === searchLower;
-        } else {
-          return resource.description.toLowerCase().includes(searchLower) ||
-            resource.resourceType.toLowerCase().includes(searchLower) ||
-            resource.availability.toLowerCase().includes(searchLower);
-        }
+        return resource.description.toLowerCase().includes(searchLower) ||
+          resource.resourceType.toLowerCase().includes(searchLower) ||
+          resource.availability.toLowerCase().includes(searchLower);
       });
     }
-    this.sortFilteredResources(); // Apply sorting after filtering
+    this.sortFilteredResources();
     this.totalItems = this.filteredResources.length;
     this.currentPage = 1;
   }
@@ -138,4 +155,10 @@ export class AddResourceComponent implements OnInit {
     this.onSearch();
   }
 
+  clearMessages(): void {
+    this.showError = false;
+    this.showMessage = false;
+    this.errorMessage = '';
+    this.responseMessage = '';
+  }
 }

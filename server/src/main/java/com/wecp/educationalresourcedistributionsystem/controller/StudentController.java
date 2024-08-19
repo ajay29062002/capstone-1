@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import javax.persistence.EntityNotFoundException;
+
 @RestController
 public class StudentController {
 
@@ -19,12 +21,16 @@ public class StudentController {
     @Autowired
     private EventService eventService;
 
-
     @PostMapping("/api/student/register/{eventId}")
-    public ResponseEntity<EventRegistration> registerForEvent(@PathVariable Long eventId, @RequestBody EventRegistration registration) {
-        EventRegistration createdRegistration = registrationService.registerForEvent(eventId, registration);
-       
-        return new ResponseEntity<EventRegistration>(createdRegistration, HttpStatus.CREATED);
+    public ResponseEntity<?> registerForEvent(@PathVariable Long eventId, @RequestBody EventRegistration registration) {
+        try {
+            EventRegistration createdRegistration = registrationService.registerForEvent(eventId, registration);
+            return new ResponseEntity<>(createdRegistration, HttpStatus.CREATED);
+        } catch (IllegalStateException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping("/api/student/registration-status/{studentId}")

@@ -1,33 +1,42 @@
-body {
-  font-family: 'Arial', sans-serif;
-  background: rgba(255, 255, 255, 0.6); /* Light blue background */
-  margin: 0;
-  padding: 0;
- // box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
- // border: 1px solid #b3e5fc;
-}
-
+// body {
+//   font-family: 'Arial', sans-serif;
+//   background: rgba(255, 255, 255, 0.6);
+//   margin: 0;
+//   padding: 0;
+// }
+ 
 main {
   padding: 10px;
   max-width: 1000px;
-  margin: 10px auto;
-  background: rgba(255, 255, 255, 0.6); /* More transparent white background */
+  width: 150%;
+  margin: -10px ;
+  background: rgba(255, 255, 255, 0.6);
   border-radius: 10px;
-  
+  opacity: 0;
+  animation: fadeIn 1s forwards;
+  margin-top: 50%;
 }
-
-
+ 
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+ 
 h1 {
   text-align: center;
   margin-bottom: 15px;
   color: #00796b;
   font-size: 1.8rem;
 }
-
+ 
 .event-section {
   margin-bottom: 30px;
+  opacity: 0;
+  animation: fadeIn 1s forwards;
+  animation-delay: 0.2s;
 }
-
+ 
 h2 {
   margin-bottom: 10px;
   font-size: 1.4rem;
@@ -35,9 +44,9 @@ h2 {
   border-bottom: 2px solid #00acc1;
   padding-bottom: 5px;
 }
-
+ 
 table {
-  width: 95%; /* Increased width for the table */
+  width: 95%;
   margin: 0 auto;
   border-collapse: collapse;
   background-color: rgba(255, 255, 255, 0.95);
@@ -45,30 +54,29 @@ table {
   overflow: hidden;
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.08);
   border: 1px solid #b3e5fc;
+  opacity: 0;
+  animation: fadeIn 1s forwards;
+  animation-delay: 0.4s;
 }
-
+ 
 th, td {
   padding: 8px;
   text-align: left;
   font-size: 0.85rem;
 }
-
+ 
 thead th {
-  background-color: #81d4fa; /* Light blue background for the header */
+  background-color: #81d4fa;
   color: white;
 }
-
+ 
 tbody tr:nth-child(odd) {
-  background-color: rgba(242, 248, 251, 0.8); /* Very light blue */
+  background-color: rgba(242, 248, 251, 0.8);
 }
-
-// tbody tr:hover {
-//   background-color: rgba(178, 235, 242, 0.8);
-// }
-
+ 
 .update-btn {
   color: #fff;
-  background: linear-gradient(to right, #81d4fa, #4fc3f7); /* Light blue gradient */
+  background: linear-gradient(to right, #81d4fa, #4fc3f7);
   border: none;
   padding: 5px 10px;
   font-size: 0.85rem;
@@ -76,53 +84,57 @@ tbody tr:nth-child(odd) {
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease-in-out;
 }
-
+ 
 .update-btn:hover {
-  background: linear-gradient(to right, #4fc3f7, #0288d1); /* Darker blue gradient on hover */
+  background: linear-gradient(to right, #4fc3f7, #0288d1);
 }
-
-
+ 
 .alert {
   margin-top: 10px;
   padding: 8px 10px;
   border-radius: 5px;
   font-size: 0.85rem;
+  opacity: 0;
+  animation: fadeIn 1s forwards;
+  animation-delay: 0.6s;
 }
-
+ 
 .alert-danger {
   color: #c62828;
   background-color: #ffcdd2;
   border-color: #e57373;
 }
-
+ 
 .alert-success {
   color: #2e7d32;
   background-color: #c8e6c9;
   border-color: #81c784;
 }
-
+ 
 .modal-content {
   border-radius: 8px;
   padding: 15px;
   background-color: #ffffff;
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.08);
   border: 1px solid #b3e5fc;
+  opacity: 0;
+  animation: fadeIn 0.5s forwards;
 }
-
+ 
 .modal-header {
   border-bottom: 1px solid #00acc1;
 }
-
+ 
 .modal-header h5 {
   font-size: 1.3rem;
   color: #00796b;
 }
-
+ 
 .modal-body .form-group label {
   font-weight: 600;
   color: #495057;
 }
-
+ 
 .modal-body .form-control {
   border-radius: 5px;
   width: 100%;
@@ -130,46 +142,42 @@ tbody tr:nth-child(odd) {
   font-size: 0.85rem;
   border: 1px solid #b3e5fc;
 }
-
-.modal-footer .btn-primary {
-  background: linear-gradient(to right, #81d4fa, #4fc3f7); /* Light blue gradient */
+ 
+.modal-footer .btn-primary,
+.modal-footer .btn-secondary,
+.btn-primary {
+  transition: opacity 0.3s ease, transform 0.2s ease-in-out, background-color 0.3s ease;
+}
+ 
+.modal-footer .btn-primary,
+.btn-primary {
+  background: linear-gradient(to right, #81d4fa, #4fc3f7);
   border: none;
   padding: 6px 10px;
   border-radius: 5px;
   font-size: 0.85rem;
+  color: #fff;
+  cursor: pointer;
 }
-
+ 
 .modal-footer .btn-secondary {
   padding: 6px 10px;
   border-radius: 5px;
   background-color: #b0bec5;
   font-size: 0.85rem;
 }
-
-.modal-footer .btn-primary:hover {
-  background: linear-gradient(to right, #4fc3f7, #85cbf0); /* Darker blue gradient on hover */
-}
-
-.modal-footer .btn-secondary:hover {
-  background-color: #78909c;
-}
-.btn-primary {
-  color: #fff;
-  background: linear-gradient(to right, #81d4fa, #4fc3f7); /* Light blue gradient */
-  border: none;
-  padding: 7px; /* Same padding as previous */
-  font-size: 16px; /* Same font size as previous */
-  font-weight: 300; /* Same font weight as previous */
-  border-radius: 6px; /* Same border radius as previous */
-  cursor: pointer;
-  transition: opacity 0.3s ease, transform 0.2s ease-in-out;
-}
-
+ 
+.modal-footer .btn-primary:hover,
 .btn-primary:hover {
+  background: linear-gradient(to right, #4fc3f7, #85cbf0);
   opacity: 0.9;
   transform: scale(1.05);
 }
-
+ 
+.modal-footer .btn-secondary:hover {
+  background-color: #78909c;
+}
+ 
 .btn-primary:disabled {
   background: #ccc;
   cursor: not-allowed;

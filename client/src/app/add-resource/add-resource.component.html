@@ -1,38 +1,46 @@
 <div class="container">
   <h1 class="my-4 text-center">Manage Resource</h1>
 
-<div class="card mb-4">
-  <div class="card-header">Add Resource</div>
-  <div class="card-body">
-    <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
-      <div class="row">
-        <div class="form-group col-md-6">
-          <label for="description">Description</label>
-          <input type="text" id="description" formControlName="description" class="form-control"
-            placeholder="Description">
-          <div *ngIf="itemForm.get('description')?.invalid && itemForm.get('description')?.touched"
-            class="text-danger">
-            Description is required.
+  <div class="card mb-4">
+    <div class="card-header">Add Resource</div>
+    <div class="card-body">
+      <form [formGroup]="itemForm" (ngSubmit)="onSubmit()" (input)="clearMessages()">
+        <div class="row">
+          <div class="form-group col-md-6">
+            <label for="description">Description</label>
+            <input type="text" id="description" formControlName="description" class="form-control"
+              placeholder="Description">
+            <div *ngIf="itemForm.get('description')?.invalid && itemForm.get('description')?.touched"
+              class="text-danger">
+              Description is required.
+            </div>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="resourceType">Resource Type</label>
+            <input type="text" id="resourceType" formControlName="resourceType" class="form-control"
+              placeholder="Resource Type">
+            <div *ngIf="itemForm.get('resourceType')?.invalid && itemForm.get('resourceType')?.touched"
+              class="text-danger">
+              Resource Type is required.
+            </div>
           </div>
         </div>
-        <div class="form-group col-md-6">
-          <label for="resourceType">Resource Type</label>
-          <input type="text" id="resourceType" formControlName="resourceType" class="form-control"
-            placeholder="Resource Type">
-          <div *ngIf="itemForm.get('resourceType')?.invalid && itemForm.get('resourceType')?.touched"
-            class="text-danger">
-            Resource Type is required.
+        <div class="row mt-3">
+          <div class="col-12 d-flex justify-content-center">
+            <button type="submit" class="btn btn-primary" [disabled]="itemForm.invalid">Add Resource</button>
           </div>
         </div>
-      </div>
-      <div class="row mt-3">
-        <div class="col-12 d-flex justify-content-center">
-          <button type="submit" class="btn btn-primary" [disabled]="itemForm.invalid">Add Resource</button>
-        </div>
-      </div>
-    </form>
+      </form>
+    </div>
   </div>
-</div>
+
+  <div *ngIf="showError" class="alert alert-danger mt-3">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="showMessage" class="alert alert-success mt-3">
+    {{ responseMessage }}
+  </div>
 
   <div class="card mt-4">
     <div class="card-header">Resource Information</div>
@@ -41,7 +49,7 @@
         <div class="col-md-6">
           <div class="d-flex">
             <div class="input-group flex-grow-1">
-              <input type="text" class="form-control" placeholder="Search events..." [(ngModel)]="searchTerm"
+              <input type="text" class="form-control" placeholder="Search resources..." [(ngModel)]="searchTerm"
                 (input)="onSearch()">
             </div>
             <button class="btn btn-outline-secondary" style="margin-left: 15px;" type="button" (click)="clearSearch()"

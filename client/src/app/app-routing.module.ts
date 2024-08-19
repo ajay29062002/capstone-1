@@ -13,6 +13,7 @@ import { ResourceAllocateComponent } from './resource-allocate/resource-allocate
 import { ViewEventsComponent } from './view-events/view-events.component';
 import { BookingDetailsComponent } from './booking-details/booking-details.component';
 import { RegisterForEventComponent } from './register-for-event/register-for-event.component';
+import { ViewRegistrationsComponent } from './view-registrations/view-registrations.component';
 
 
 const routes: Routes = [
@@ -25,7 +26,8 @@ const routes: Routes = [
   { path: 'view-events', component: ViewEventsComponent },  
   { path: 'booking-details', component: BookingDetailsComponent }, 
   { path: 'register-for-event', component: RegisterForEventComponent },   
-  //{ path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+  { path: 'view-registrations', component: ViewRegistrationsComponent },
+
   { path: '', redirectTo: '/login', pathMatch: 'full' },
 
   { path: '**', redirectTo: '/dashboard', pathMatch: 'full' },

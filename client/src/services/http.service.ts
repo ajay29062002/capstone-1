@@ -91,7 +91,10 @@ export class HttpService {
 
   deleteResource(resourceId: any) {
     return this.http.delete(`${this.serverName}/api/institution/resources/${resourceId}`, { headers: this.getHeaders() });
+  }
 
+  getAllEventRegistrations(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.serverName}/api/institution/event-registrations`, { headers: this.getHeaders() });
   }
 
 }

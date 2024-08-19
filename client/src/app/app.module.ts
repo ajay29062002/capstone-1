@@ -14,6 +14,7 @@ import { AddResourceComponent } from './add-resource/add-resource.component';
 import { ResourceAllocateComponent } from './resource-allocate/resource-allocate.component';
 import { ViewEventsComponent } from './view-events/view-events.component';
 import { BookingDetailsComponent } from './booking-details/booking-details.component';
+import { ViewRegistrationsComponent } from './view-registrations/view-registrations.component';
 
 import { RegisterForEventComponent } from './register-for-event/register-for-event.component';
 
@@ -28,7 +29,7 @@ import { RegisterForEventComponent } from './register-for-event/register-for-eve
     ResourceAllocateComponent,
     ViewEventsComponent,
     BookingDetailsComponent,
-
+    ViewRegistrationsComponent,
     RegisterForEventComponent
   ],
   imports: [

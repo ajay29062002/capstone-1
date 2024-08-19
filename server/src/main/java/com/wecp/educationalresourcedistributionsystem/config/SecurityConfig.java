@@ -41,9 +41,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authz -> authz
                         .antMatchers("/api/user/register", "/api/user/login", "/api/user/users")
                         .permitAll()
+                        .antMatchers("/api/institution/event-registrations")
+                        .hasAnyAuthority("INSTITUTION", "EDUCATOR")
                         .antMatchers("/api/institution/**").hasAuthority("INSTITUTION")
                         .antMatchers("/api/student/**").hasAuthority("STUDENT")
-                        
                         .antMatchers("/api/educator/**").hasAuthority("EDUCATOR")
                         .anyRequest().authenticated())
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);

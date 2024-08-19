@@ -13,17 +13,26 @@ body {
 }
 
 .container {
-  width: 90%; /* Adjusted to fit within the page */
+  width: 150%; /* Adjusted to fit within the page */
   max-width: 800px;
   padding: 20px; /* Reduced padding to fit better on smaller screens */
   background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7));
   border-radius: 10px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-  transition: transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  opacity: 0; /* Initially hidden */
+  animation: fadeIn 1s forwards; /* Fade-in effect */
 }
 
 .container:hover {
   transform: translateY(-5px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
 }
 
 h2 {
@@ -32,12 +41,16 @@ h2 {
   color: #4a4a4a;
   font-size: 24px; /* Slightly reduced font size */
   font-weight: 600;
+  opacity: 0; /* Initially hidden */
+  animation: fadeIn 1s forwards 0.5s; /* Fade-in effect with delay */
 }
 
 .search-section {
   display: flex;
   align-items: center;
   margin-bottom: 20px;
+  opacity: 0; /* Initially hidden */
+  animation: fadeIn 1s forwards 1s; /* Fade-in effect with delay */
 }
 
 label {
@@ -69,16 +82,19 @@ label {
   border-radius: 5px;
   cursor: pointer;
   box-shadow: 0 2px 5px rgba(0, 123, 255, 0.2);
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
 }
 
 .btn-primary:hover {
   background-color: #0056b3;
   box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
+  transform: scale(1.05); /* Slightly enlarge on hover */
 }
 
 .booking-info {
   margin-top: 20px;
+  opacity: 0; /* Initially hidden */
+  animation: fadeIn 1s forwards 1.5s; /* Fade-in effect with delay */
 }
 
 .table {
@@ -109,6 +125,8 @@ label {
   display: flex;
   align-items: center;
   font-size: 14px;
+  opacity: 0; /* Initially hidden */
+  animation: fadeIn 1s forwards 2s; /* Fade-in effect with delay */
 }
 
 .alert-success {
