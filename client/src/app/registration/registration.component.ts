@@ -85,7 +85,7 @@ export class RegistrationComponent implements OnInit {
          // this.router.navigateByUrl('/login');
          setTimeout(() => {
           this.router.navigateByUrl('/login');
-        }, 1000);
+        }, 2000);
         },
         (error) => {
           this.showMessage = true;

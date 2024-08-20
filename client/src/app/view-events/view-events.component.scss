@@ -32,7 +32,7 @@ h1 {
 }
  
 .event-section {
-  margin-bottom: 30px;
+  margin-bottom: 40px;
   opacity: 0;
   animation: fadeIn 1s forwards;
   animation-delay: 0.2s;
@@ -40,9 +40,9 @@ h1 {
   border-radius: 6px; /* Slightly smaller rounded corners */
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); /* Slightly smaller shadow */
   margin-top: 30%;
-  width: 150%;
-  margin-left: -20%;
-  height: 150%;
+  width: 90%;
+  margin-left: 5%;
+  height: 200%;
 }
  
 h2 {
@@ -54,7 +54,7 @@ h2 {
 }
  
 table {
-  width: 95%;
+  width: 85%;
   margin: 0 auto;
   border-collapse: collapse;
   background-color: rgba(255, 255, 255, 0.95);

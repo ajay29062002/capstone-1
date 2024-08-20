@@ -28,7 +28,7 @@ public class JwtUtil {
     private final String secret = "secretKey000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
     private final Key key = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
  
-    private final int expiration = 86400;
+    private final int expiration = 3600;
  
     public String generateToken(String username) {
         Date now = new Date();
