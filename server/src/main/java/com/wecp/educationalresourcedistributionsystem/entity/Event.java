@@ -19,6 +19,9 @@ public class Event {
     @OneToMany(mappedBy = "event", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Resource> resourceAllocations;
 
+    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
+    private List<EventRegistration> eventRegistrations;
+
     public Long getId() {
         return id;
     }
