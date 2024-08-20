@@ -58,6 +58,7 @@ export class CreateEventComponent implements OnInit {
       (data) => {
         this.eventList = data;
         this.filteredEvents = [...this.eventList];
+        this.sortFilteredEvents();
         this.totalItems = this.filteredEvents.length;
       },
       (error) => {
@@ -71,6 +72,7 @@ export class CreateEventComponent implements OnInit {
   onSubmit(): void {
     if (this.itemForm.valid) {
       const newEvent = this.itemForm.value;
+      newEvent.date = this.formatDate(newEvent.date);
 
       // Check if event with same name already exists
       const isDuplicate = this.eventList.some(event =>
@@ -110,6 +112,10 @@ export class CreateEventComponent implements OnInit {
     }
   }
 
+  private formatDate(date: string): string {
+    return new Date(date).toISOString().split('T')[0];
+  }
+
   onDelete(eventId: any): void {
     this.httpService.deleteEvent(eventId).subscribe(() => {
       this.getEvents();
@@ -118,18 +124,14 @@ export class CreateEventComponent implements OnInit {
 
   toggleSort(): void {
     this.isAscending = !this.isAscending;
-    if (this.searchTerm) {
-      this.sortFilteredEvents();
-    } else {
-      this.getEvents();
-    }
+    this.sortFilteredEvents();
   }
 
   sortFilteredEvents(): void {
     this.filteredEvents.sort((a, b) => {
-      const dateA = new Date(a.date).getTime();
-      const dateB = new Date(b.date).getTime();
-      return this.isAscending ? dateA - dateB : dateB - dateA;
+      return this.isAscending
+        ? a.date.localeCompare(b.date)
+        : b.date.localeCompare(a.date);
     });
   }
 
@@ -168,10 +170,7 @@ export class CreateEventComponent implements OnInit {
 
   private getTodayDate(): string {
     const today = new Date();
-    const year = today.getFullYear();
-    const month = (today.getMonth() + 1).toString().padStart(2, '0');
-    const day = today.getDate().toString().padStart(2, '0');
-    return `${year}-${month}-${day}`;
+    return today.toISOString().split('T')[0];
   }
 
   toggleExpand(event: any): void {

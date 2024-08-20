@@ -26,7 +26,6 @@ body {
   text-align: center;
   width: 30%; /* Adjust width as needed */
   margin: 0 10px; /* Space between containers */
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Added transition */
   opacity: 0; /* Initially hidden */
   animation: landing 1s forwards; /* Landing animation */
 }
@@ -57,6 +56,7 @@ body {
 .image-container:hover {
   transform: translateY(-10px); /* Move up on hover */
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Increase shadow on hover */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
 }
 
 .image-container img {
